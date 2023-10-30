@@ -1,24 +1,38 @@
-# README
+# uchinoko
+​
+## サイト概要
+### サイトテーマ
+子育ての成功事例を共有することで、記事を見た親の子育て力が向上したり子育てのヒントが得られるSNS
+​
+### テーマを選んだ理由
+SNS上には大小問わず多くの人の成果や活躍が公開され、本人の努力や過程が公開されています。
+しかしその人を一番近くでサポートしている「親」は、何を考えてどのように子供と関わったか？ということにはあまりスポットが当てられていないと感じました。
+様々な成果を上げる人たちの「親」が、何を考えどんなアクションを起こしていたのかを共有すれば、素晴らしい成功事例の集積となり、子育てにおいて素晴らしい学びになると思います。
+NHKが848件を対象に行った「パパ、ママの子育ての悩み」インタビュー調査でも7位に「子供との関わり方がわからない」、5位に「叱り方がわからない」と関わり方での悩みが上位にランクインしています。
+単なる子供自慢のためのSNSではなく、記事を見た全ての親の教育力が向上したり子育てのヒントが得られ、日本の将来に貢献できるようなSNSを作りたいと思い開発に至りました。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+​
+### ターゲットユーザ
+- 子供の成長を多くの人に見てもらいたい人
+- 子育ての情報を発信したい人
+- 子供への関わり方で悩んでいる人
+​
+### 主な利用シーン
+- 子供の成長を感じた出来事を共有したい時
+- 親としての関わり方をアウトプットしたい時
+- 子育てや子供との関わり方で悩んだり困った時
 
-Things you may want to cover:
+​
+## 設計書
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+​
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- IDE：Cloud9
+​
+## 使用素材
+- FontAwesome
+- https://fontawesome.com/
