@@ -24,9 +24,10 @@ NHKが848件を対象に行った「パパ、ママの子育ての悩み」イ�
 
 ​
 ## 設計書
- -
+ - ER図（https://app.diagrams.net/#G1cJQ3tuZDtN03uZR5H2rCSndVRgM4XTt9）
+ - アプリケーション詳細設計書（https://docs.google.com/spreadsheets/d/1hnkzqk1FFhbFlC-5D4QS0PKGqe9KsHNtkD5PHlhOYNw/edit#gid=549108681）
 
-​
+
 ## 開発環境
 - OS：Linux(CentOS)
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
