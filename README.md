@@ -24,6 +24,7 @@ NHKが848件を対象に行った「パパ、ママの子育ての悩み」イ�
 
 ​
 ## 設計書
+ -
 
 ​
 ## 開発環境
@@ -32,7 +33,3 @@ NHKが848件を対象に行った「パパ、ママの子育ての悩み」イ�
 - フレームワーク：Ruby on Rails
 - JSライブラリ：jQuery
 - IDE：Cloud9
-​
-## 使用素材
-- FontAwesome
-- https://fontawesome.com/
