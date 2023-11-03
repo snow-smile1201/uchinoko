@@ -1,2 +1,45 @@
-<h1>Public::Posts#show</h1>
-<p>Find me in app/views/public/posts/show.html.erb</p>
+<div class="container px-5 px-sm-0">
+  <div class="row my-4">
+    <div class="col-12">
+      <h2><%= @post.child.name %>の成長記録 </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 p-5">
+      <%= image_tag @post.get_post_image(300, 300), class: 'item_image' %>
+    </div>
+    <div class="col-md-8 p-5">
+
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <th style="width: 30%;">タイトル</th>
+            <td><%= @post.title %></td>
+          </tr>
+          <tr>
+            <th>本文</th>
+            <td><%= @post.body %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <th style="width: 30%;">ジャンル</th>
+            <td><%= @post.genre.name %></td>
+          </tr>
+          <tr>
+            <th>公開ステータス</th>
+            <% if @post.is_active == true %>
+              <td><strong style="color: green;">公開中</strong></td>
+            <% else %>
+              <td><strong style="color: gray;">公開停止中</strong></td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+      <%= link_to '編集する', edit_post_path(@post), class:"btn btn-success ml-3" %>
+    </div>
+  </div>
+</div>

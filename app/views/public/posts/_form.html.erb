@@ -1,0 +1,40 @@
+<%= render "admin/shared/error_messages", resource: post %>
+<%= form_with model: post, url: posts_path do |f| %>
+  <table class="table table-borderless table-sm">
+    <tbody>
+      <tr>
+        <th><%= f.label :child_id, "うちのこ" %></th>
+        <td><%= f.collection_select :child_id, Child.all, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :post_image, "画像" %></th>
+        <td><%= f.file_field :post_image, accept: "image/jpeg" %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :title, "タイトル" %></th>
+        <td><%= f.text_field :title, :placeholder => "タイトル", class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :body, "投稿内容" %></th>
+        <td><%= f.text_area :body, rows: 7, placeholder:place_holder, class: "form-control" %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :genre_id, "ジャンル" %></th>
+        <td><%= f.collection_select :genre_id, Genre.all, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
+      </tr>
+        <th><%= f.label :is_active, "公開ステータス" %></th>
+        <td>
+          <%= f.radio_button :is_active, true %>
+          <strong><%= f.label :is_active_true, "公開中"%></strong>
+          <%= "　 　"%>
+          <%= f.radio_button :is_active, false %>
+          <strong style="color: gray;"><%= f.label :is_active_false, "公開停止中"%></strong>
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td><%= f.submit '投稿する',class:"btn btn-success" %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
