@@ -1,5 +1,6 @@
 class Public::PostsController < ApplicationController
   def index
+    @genres = Genre.all
     @posts = Post.all
   end
 
@@ -20,6 +21,7 @@ class Public::PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @post_comment = PostComment.new
   end
 
   def edit
@@ -34,8 +36,13 @@ class Public::PostsController < ApplicationController
       render :edit
     end
   end
+  def destroy
+    post = Post.find(params[:id])
+    post.destroy
+    redirect_to posts_path
+  end
 
-  private
+private
 
   def post_params
     params.require(:post).permit(:title, :body, :child_id, :genre_id, :is_active, :post_image)

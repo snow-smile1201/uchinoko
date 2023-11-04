@@ -39,7 +39,30 @@
           </tr>
         </tbody>
       </table>
-      <%= link_to '編集する', edit_post_path(@post), class:"btn btn-success ml-3" %>
+      <%if @post.user == current_user %>
+        <%= link_to '編集', edit_post_path(@post), class:"btn btn-success ml-3" %>
+        <%= link_to '削除', post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger ml-3" %>
+      <% end %>
     </div>
   </div>
+  <div>
+    <%if @post.favorited_by?(current_user) %>
+      <%=link_to post_favorites_path(@post), method: :delete do %>
+      <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+      <%= @post.favorites.count %>いいね
+      <% end %>
+    <% else %>
+      <%=link_to post_favorites_path(@post), method: :post do %>
+      <i class="fas fa-heart" aria-hidden="true"></i>
+      <%= @post.favorites.count %>いいね
+      <% end %>
+    <% end %>
+    コメント数：<%= @post.post_comments.count %>
+  </div>
+  <div id="post_comments">
+  <%= render 'public/post_comments/show', post: @post %>
+</div>
+<div id="comment-form">
+  <%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>
+</div>
 </div>
