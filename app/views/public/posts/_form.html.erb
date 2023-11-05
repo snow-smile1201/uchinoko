@@ -1,5 +1,3 @@
-<%= render "admin/shared/error_messages", resource: post %>
-<%= form_with model: post, url: posts_path do |f| %>
   <table class="table table-borderless table-sm">
     <tbody>
       <tr>
@@ -22,6 +20,10 @@
         <th><%= f.label :genre_id, "ジャンル" %></th>
         <td><%= f.collection_select :genre_id, Genre.all, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
       </tr>
+      <tr>
+        <th><%= f.label :name, "タグ" %></th>
+        <td><%= f.text_field :name, value: tags, class: "form-control" %></td>
+      </tr>
         <th><%= f.label :is_active, "公開ステータス" %></th>
         <td>
           <%= f.radio_button :is_active, true %>
@@ -33,8 +35,11 @@
       </tr>
       <tr>
         <th></th>
-        <td><%= f.submit '投稿する',class:"btn btn-success" %></td>
+        <% if post.new_record? %>
+          <td><%= f.submit '投稿する',class:"btn btn-success" %></td>
+        <% else %>
+          <td><%= f.submit '更新する',class:"btn btn-success" %></td>
+        <% end %>
       </tr>
     </tbody>
   </table>
-<% end %>

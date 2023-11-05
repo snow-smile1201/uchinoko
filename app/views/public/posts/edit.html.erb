@@ -5,7 +5,9 @@
   <div class="row">
     <div class="col-md-8 mx-auto">
       <%= render "admin/shared/error_messages", resource: @post %>
-      <%= render "form", post: @post %>
+      <%= form_with model: @post, url: post_path(@post), method: :patch do |f| %>
+        <%= render "form", post: @post, tags: @tags, f: f %>
+      <% end %>
     </div>
   </div>
 </div>

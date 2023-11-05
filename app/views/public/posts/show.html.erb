@@ -13,7 +13,7 @@
       <table class="table table-borderless">
         <tbody>
           <tr>
-            <th style="width: 30%;">タイトル</th>
+            <th style="width: 25%;">タイトル</th>
             <td><%= @post.title %></td>
           </tr>
           <tr>
@@ -26,8 +26,13 @@
       <table class="table table-borderless">
         <tbody>
           <tr>
-            <th style="width: 30%;">ジャンル</th>
+            <th style="width: 25%;">ジャンル</th>
             <td><%= @post.genre.name %></td>
+          </tr>
+          <tr>
+          <tr>
+            <th style="width: 25%;">タグ</th>
+            <td><%= @tags %></td>
           </tr>
           <tr>
             <th>公開ステータス</th>
