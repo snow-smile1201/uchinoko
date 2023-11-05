@@ -45,18 +45,8 @@
       <% end %>
     </div>
   </div>
-  <div>
-    <%if @post.favorited_by?(current_user) %>
-      <%=link_to post_favorites_path(@post), method: :delete do %>
-      <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
-      <%= @post.favorites.count %>いいね
-      <% end %>
-    <% else %>
-      <%=link_to post_favorites_path(@post), method: :post do %>
-      <i class="fas fa-heart" aria-hidden="true"></i>
-      <%= @post.favorites.count %>いいね
-      <% end %>
-    <% end %>
+  <div id="favorite_button_<%= @post.id%>">
+    <%= render 'public/favorites/favorite', post: @post %>
     コメント数：<%= @post.post_comments.count %>
   </div>
   <div id="post_comments">
