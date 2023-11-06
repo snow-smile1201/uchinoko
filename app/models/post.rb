@@ -23,40 +23,21 @@ class Post < ApplicationRecord
   end
 
   #タグ投稿用メソッド
-  def save_tags(tags)
-    tags.each do |new_tags|
-      self.tags.find_by(name: new_tags) || self.tags.create(name: new_tags)
+  def save_tag(sent_tags)
+    #@postに紐付いているタグが存在する場合、タグ名を配列として全て取得
+    current_tags = self.tags.pluck(:name) unless self.tags.nil?
+    #既存タグから、送信されてきたタグを除いたタグをold_tagsとする
+    old_tags = current_tags - sent_tags
+    #送信されてきたタグから、既存タグを除いたタグをnew_tagsとする
+    new_tags = sent_tags - current_tags
+    #oldタグは削除
+    old_tags.each do |old|
+      self.tags.delete Tag.find_by(name: old)
     end
-  end
-
-  def update_tags(latest_tags)
-    #既存のタグがない場合は追加のみ行う
-    if self.tags.empty?
-      latest_tags.each do |latest_tag|
-        self.tags.find_by(name: latest_tag) || self.tags.create(name: latest_tag)
-      end
-    elsif latest_tags.empty?
-      # 更新対象のタグが空の場合、既存のタグを削除
-      self.tags.each do |tag|
-        self.tags.delete(tag)
-      end
-    else
-      #既存のタグ名を取得しcurrentタグに代入
-      current_tags = self.tags.pluck(:name)
-      #既存のタグ名から、今回新規に作成されたタグ差し引いた残りをoldタグに代入
-      old_tags = current_tags - latest_tags
-      #新規作成したタグから現状保存されているタグを差し引いた残りをnewタグに代入
-      new_tags = latest_tags - current_tags
-
-      # 既存タグから名前が一致するタグを取り出してtagに代入し、削除
-      old_tags.each do |old_tag|
-        tag = self.tags.find_by(name: old_tag)
-        self.tags.destroy(tag) if tag.present?
-      end
-      #新しいタグを追加
-      new_tags.each do |new_tag|
-        self.tags.find_by(name: new_tag) || self.tags.create(name: new_tag)
-      end
+    #newタグは保存
+    new_tags.each do |new|
+      new_post_tag = Tag.find_or_create_by(name: new)
+      self.tags << new_post_tag
     end
   end
 end

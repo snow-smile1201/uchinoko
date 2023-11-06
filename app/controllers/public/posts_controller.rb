@@ -10,12 +10,10 @@ class Public::PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.user_id = current_user.id
-    #:tag_idにするとエラー？:nameにすると動作する
-    @tags = params[:post][:name].split(',')
+    @post = current_user.posts.new(post_params)
+    tags = params[:post][:name].split(',')
     if @post.save
-      @post.save_tags(@tags)
+      @post.save_tag(tags)
       redirect_to post_path(@post)
     else
       render :new
@@ -26,20 +24,19 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @post_comment = PostComment.new
-    @tags = @post.tags.pluck(:name).join(',')
   end
 
   def edit
     @post = Post.find(params[:id])
     @tags = @post.tags.pluck(:name).join(',')
+
   end
 
   def update
     @post = Post.find(params[:id])
-    #:tag_idにするとエラー？:nameにすると動作する
-    @tags = params[:post][:name].split(',')
+    tags = params[:post][:name].split(',')
     if @post.update(post_params)
-      @post.update_tags(@tags)
+      @post.save_tag(tags)
       redirect_to post_path(@post)
     else
       render :edit

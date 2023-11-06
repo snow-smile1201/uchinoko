@@ -32,7 +32,12 @@
           <tr>
           <tr>
             <th style="width: 25%;">タグ</th>
-            <td><%= @tags %></td>
+            <td>
+              <% @post.tags.each do |tag| %>
+                <i class="fa-sharp fa-solid fa-tag"></i>
+                <%= tag.name %><%= "(#{tag.posts.count})" %>
+              <% end %>
+            </td>
           </tr>
           <tr>
             <th>公開ステータス</th>
@@ -52,9 +57,9 @@
   </div>
   <div id="favorite_button_<%= @post.id%>">
     <%= render 'public/favorites/favorite', post: @post %>
-    コメント数：<%= @post.post_comments.count %>
   </div>
   <div id="post_comments">
+    コメント数：<%= @post.post_comments.count %>
   <%= render 'public/post_comments/show', post: @post %>
 </div>
 <div id="comment-form">
