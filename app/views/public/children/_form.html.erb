@@ -1,0 +1,17 @@
+<table class="table table-borderless">
+  <tbody>
+    <tr>
+      <td><%= f.file_field :profile_image, accept: "image/jpeg" %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :name, "名前 (ニックネーム)" %><%= f.text_field :name, class: "form-control" %></td>
+      <td><%= f.label :birthday, "誕生日" %><%= f.date_field :birthday, class: "form-control" %></td>
+      <% if child.new_record? %>
+        <td><%= f.submit '登録',class:"btn btn-success" %></td>
+      <% else %>
+        <td><%= f.submit '更新',class:"btn btn-success" %></td>
+      <% end %>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

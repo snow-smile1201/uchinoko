@@ -1,45 +1,18 @@
 <div class="container px-sm-0 px-5">
   <div class="row my-4">
-    <h3>うちの子一覧・追加</h3>
+    <h3>うちの子追加</h3>
   </div>
   <div class="row px-sm-0 px-5">
     <div class="col-md-8 px-5 px-sm-0">
       <%= render "admin/shared/error_messages", resource: @child %>
-      <%= form_with model: @child, url: children_path do |f| %>
-      <table class="table table-borderless">
-        <tbody>
-            <tr>
-              <td><%= f.label :name, "名前 (ニックネーム)" %><%= f.text_field :name, class:"form-control" %></td>
-              <td><%= f.label :birthday, "誕生日" %><%= f.date_field :birthday, class:"form-control" %></td>
-              <td><%= f.submit '登録', class:"btn btn-success" %></td>
-              <td></td>
-            </tr>
-        </tbody>
-      </table>
+      <%= form_with model: @child, url: children_path, method: :post do |f| %>
+        <%= render "public/children/form", child: @child, f: f %>
       <% end %>
     </div>
   </div>
-
   <div class="row px-sm-0 px-5">
-    <div class="col-md-5 px-5 px-sm-0">
-      <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th>うちの子</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @children.each do |child| %>
-            <tr>
-              <td><%= child.name %></td>
-              <td><%= child.birthday %></td>
-              <td><%= link_to "編集する", edit_child_path(child), class: "btn btn-sm btn-success" %></td>
-            </tr>
-          <%end%>
-        </tbody>
-      </table>
+    <div class="col-md-8 px-5 px-sm-0">
+      <%= render 'index', children: @children %>
     </div>
   </div>
 </div>

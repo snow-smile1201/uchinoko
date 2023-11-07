@@ -26,9 +26,14 @@ Rails.application.routes.draw do
     get 'homes/about' => 'homes#about'
     get 'users/confirm_withdraw' => 'users#confirm_withdraw'
 
-    resources :users, only: [:index, :show, :edit, :update]
+    resources :users, only: [:index, :show, :edit, :update] do
+      member do
+        get :followings, :followers
+      end
+      resource :user_relationships, only: [:create, :destroy]
+      end
     resources :children, only: [:index, :create, :show, :edit, :update]
-    resources :posts, only: [:index,:new, :create, :show, :edit, :update, :destroy]do
+    resources :posts, only: [:index,:new, :create, :show, :edit, :update, :destroy] do
       resources :post_comments, only: [:create, :destroy]
       resource :favorites, only: [:create, :destroy]
     end

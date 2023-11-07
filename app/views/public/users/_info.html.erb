@@ -1,0 +1,31 @@
+<table class="table">
+  <tbody>
+    <tr>
+      <th><%= image_tag user.get_profile_image(50, 50) %><span class="ml-3"><%= user.name %></span></th>
+    </tr>
+    </tr>
+      <tr>
+      <th>
+        フォロー：<%= link_to user.followings.count, followings_user_path(user) %><br>
+        フォロワー：<%= link_to user.followers.count, followers_user_path(user) %>
+      </th>
+    </tr>
+    <tr>
+      <th>うちの教育方針</th>
+    </tr>
+    <tr>
+      <th>
+        educational_policy
+      </th>
+    </tr>
+  </tbody>
+</table>
+<div class="row w-100">
+  <% if current_user != user %>
+    <td><%= render "public/user_relationships/btn", user: user %></td>
+  <% else %>
+    <%= link_to edit_user_path(user.id), class:"btn btn-block btn-outline-secondary btn-sm" do %>
+    <i class="fas fa-user-cog"></i>
+    <% end %>
+  <% end %>
+</div>

@@ -1,4 +1,4 @@
-<div class="card-list-container py-5 d-flex">
+<div class="card-list-deck py-5 d-flex">
   <div class="offset-md-1 col-md-2">
     <table class="table table-sm">
       <thead class="thead-light">
@@ -16,6 +16,11 @@
         <%end%>
       </tbody>
     </table>
-  </div class="">
+  </div>
   <%= render 'index', posts: @posts %>
 </div>
+    <div class="col">
+      <%= link_to new_post_path do %>
+        <button type="button" class="btn btn-light rounded-circle p-0 shadow-sm" style="width:2rem;height:2rem;"><strong>＋</strong></button>
+      <% end %>
+    </div>

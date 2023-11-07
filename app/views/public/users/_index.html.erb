@@ -1,0 +1,26 @@
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Kodomo</th>
+        <th>Followers</th>
+        <th></th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.each do |user| %>
+        <tr>
+          <td>
+            <%= image_tag user.get_profile_image(50, 50) %>
+          </td>
+          <td><%= user.name %></td>
+          <td><%= user.children.count %></td>
+          <td>フォロワー数:<%= user.followers.count %></td>
+          <td> <%= render "public/user_relationships/btn", user: user, options: { class: "follow-link"} %></td>
+          <td><%= link_to "Show", user_path(user.id) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

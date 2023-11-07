@@ -1,0 +1,30 @@
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>うちの子</th>
+      <th>誕生日</th>
+      <th>いいね</th>
+      <th>閲覧数</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% children.each do |child| %>
+      <tr>
+        <td>
+          <%= image_tag child.get_profile_image(50, 50), class: "my-3 rounded-circle" %>
+          <span class="ml-1"><%= child.name %></span>
+          <span class="ml-1"><%= "(#{child.posts.count})" %></span>
+        </td>
+        <td><%= child.birthday %></td>
+        <td>子供のいいね総数</td>
+        <td>子供の記事の閲覧総数</td>
+        <td>
+          <%= link_to edit_child_path(child) do %>
+            <i class="fa-solid fa-pen-to-square"></i>
+          <% end %>
+        </td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
