@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  GUEST_USER_EMAIL = "guest@example.com"
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -18,6 +19,16 @@ class User < ApplicationRecord
   #followers:中間テーブルを通してfollowings(user)モデルのフォローする側を取得
   has_many :follower_users, through: :followers, source: :following
 
+  def self.guest
+    find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = "guestuser"
+    end
+  end
+  
+  def guest_user?
+    email == GUEST_USER_EMAIL
+  end
 
   def get_profile_image(width, height)
     unless profile_image.attached?
@@ -39,5 +50,4 @@ class User < ApplicationRecord
   def following?(user)
     following_users.include?(user)
   end
-
 end

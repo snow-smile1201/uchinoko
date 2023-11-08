@@ -20,12 +20,13 @@
     </tr>
   </tbody>
 </table>
-<div class="row w-100">
-  <% if current_user != user %>
-    <td><%= render "public/user_relationships/btn", user: user %></td>
-  <% else %>
-    <%= link_to edit_user_path(user.id), class:"btn btn-block btn-outline-secondary btn-sm" do %>
-    <i class="fas fa-user-cog"></i>
+<div class="btn-wrapper col-10 mx-auto">
+  <div class="row">
+    <%= render "public/user_relationships/btn", user: user %>
+    <% unless user.guest_user? || current_user != user %>
+      <%= link_to edit_user_path(user.id), class:"btn btn-block btn-outline-secondary btn-sm" do %>
+      <i class="fas fa-user-cog"></i>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
