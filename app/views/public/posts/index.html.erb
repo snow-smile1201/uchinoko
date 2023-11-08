@@ -1,5 +1,5 @@
-<div class="card-list-deck py-5 d-flex">
-  <div class="offset-md-1 col-md-2">
+<div class="card-list-container py-5 d-flex">
+  <div class="col-md-3 mt-4 ml-3">
     <table class="table table-sm">
       <thead class="thead-light">
         <tr>
@@ -17,7 +17,9 @@
       </tbody>
     </table>
   </div>
-  <%= render 'index', posts: @posts %>
+  <div class="col-md-8">
+    <%= render 'index', posts: @posts %>
+  </div>
 </div>
     <div class="col">
       <%= link_to new_post_path do %>

@@ -1,2 +1,34 @@
-<h1>Public::Users#edit</h1>
-<p>Find me in app/views/public/users/edit.html.erb</p>
+<div class="container px-sm-0 px-5">
+  <div class="row my-4">
+    <h3>プロフィール編集</h3>
+  </div>
+  <div class="row px-sm-0 px-5">
+    <div class="col-md-8 px-5 px-sm-0">
+      <%= render "admin/shared/error_messages", resource: @user %>
+      <%= form_with model: @user, url: user_path(@user), method: :patch do |f| %>
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <td><%= f.file_field :profile_image, accept: "image/jpeg" %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :name, "名前 (ニックネーム)" %>
+                  <%= f.text_field :name, class: "form-control" %>
+              </td>
+
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <%= f.label :policy, "うちの方針" %>
+                <%= f.text_area :policy, rows: 7, placeholder: "子育ての基本方針、ルール、気をつけていることなどを記入してください。", class: "form-control" %>
+              </td>
+            </tr>
+            <tr>
+              <td><%= f.submit '更新',class:"btn btn-success" %></td>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>
