@@ -18,7 +18,7 @@
           </tr>
           <tr>
             <th>本文</th>
-            <td><%= @post.body %></td>
+            <td> <%= render_with_hashtags(@post.body) %></td>
           </tr>
         </tbody>
       </table>
@@ -34,8 +34,9 @@
             <th style="width: 25%;">タグ</th>
             <td>
               <% @post.tags.each do |tag| %>
-                <i class="fa-sharp fa-solid fa-tag"></i>
-                <%= tag.name %><%= "(#{tag.posts.count})" %>
+                <%= link_to hashtag_path(tag.hashname) do %>
+                  #<%= tag.hashname %>
+                <% end %>
               <% end %>
             </td>
           </tr>

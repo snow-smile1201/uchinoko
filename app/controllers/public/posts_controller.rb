@@ -8,19 +8,15 @@ class Public::PostsController < ApplicationController
 
   def new
     @post = Post.new
-    @tags = @post.tags.new
   end
 
   def create
     @post = current_user.posts.new(post_params)
-    tags = params[:post][:name].split(',')
     if @post.save
-      @post.save_tag(tags)
       redirect_to post_path(@post)
     else
       render :new
     end
-
   end
 
   def show
@@ -30,15 +26,12 @@ class Public::PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    @tags = @post.tags.pluck(:name).join(',')
 
   end
 
   def update
     @post = Post.find(params[:id])
-    tags = params[:post][:name].split(',')
     if @post.update(post_params)
-      @post.save_tag(tags)
       redirect_to post_path(@post)
     else
       render :edit
@@ -48,6 +41,12 @@ class Public::PostsController < ApplicationController
     post = Post.find(params[:id])
     post.destroy
     redirect_to posts_path
+  end
+
+  def hashtag
+    @user = current_user
+    @tag = Tag.find_by(hashname: params[:name])
+    @posts = @tag.posts
   end
 
 private

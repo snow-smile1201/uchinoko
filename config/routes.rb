@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  namespace :public do
-    get 'inform_activities/index'
-  end
   # 管理者用
   # URL /admin/sign_in ...
   devise_for :admins, controllers: {
@@ -32,6 +29,7 @@ Rails.application.routes.draw do
     get '/' => 'homes#top'
     get 'homes/about' => 'homes#about'
     get 'users/confirm_withdraw' => 'users#confirm_withdraw'
+    get '/post/hashtag/:name', to: "posts#hashtag", as: "hashtag"
 
     resources :users, only: [:index, :show, :edit, :update] do
       member do

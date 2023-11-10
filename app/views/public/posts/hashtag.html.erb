@@ -1,0 +1,10 @@
+<div class="container px-5 px-sm-0">
+  <div class="row my-4">
+    <h2>ハッシュタグ#<%= @tag.hashname %></h2>
+  </div>
+  <div class="row mb-5">
+    <div class="col-md-10">
+    <%= render 'index', posts: @posts %>
+  </div>
+  </div>
+</div>

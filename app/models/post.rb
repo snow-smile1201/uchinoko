@@ -22,22 +22,25 @@ class Post < ApplicationRecord
     favorites.exists?(user_id: user.id)
   end
 
-  #タグ投稿用メソッド
-  def save_tag(sent_tags)
-    #@postに紐付いているタグが存在する場合、タグ名を配列として全て取得
-    current_tags = self.tags.pluck(:name) unless self.tags.nil?
-    #既存タグから、送信されてきたタグを除いたタグをold_tagsとする
-    old_tags = current_tags - sent_tags
-    #送信されてきたタグから、既存タグを除いたタグをnew_tagsとする
-    new_tags = sent_tags - current_tags
-    #oldタグは削除
-    old_tags.each do |old|
-      self.tags.delete Tag.find_by(name: old)
-    end
-    #newタグは保存
-    new_tags.each do |new|
-      new_post_tag = Tag.find_or_create_by(name: new)
-      self.tags << new_post_tag
+  #ハッシュタグ投稿用メソッド
+  after_create do
+    post = Post.find_by(id: self.id)
+    hashtags = self.body.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    post.tags = []
+    hashtags.uniq.map do |hashtag|
+      tag = Tag.find_or_create_by(hashname: hashtag.downcase.delete('#'))
+      post.tags << tag
     end
   end
+
+  before_update do
+    post = Post.find_by(id: self.id)
+    post.tags.clear
+    hashtags = self.body.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    hashtags.uniq.map do |hashtag|
+      tag = Tag.find_or_create_by(hashname: hashtag.downcase.delete('#'))
+      post.tags << tag
+    end
+  end
+
 end
