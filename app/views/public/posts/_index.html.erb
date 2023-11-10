@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <% posts.each do |post|%>
-    <div class="card w-75 mx-3 mt-4 shadow-lg">
+    <div class="card w-50 mx-2 mt-4 shadow-lg">
       <div class="row mx-auto mt-4">
         <div class="col-10 mx-auto">
             <p class="card-title">
@@ -9,6 +9,7 @@
               <strong><i class="far fa-flag"></i><span><%= post.title %></span></strong>
               <% end %>
             </p>
+            <!--TODO：画像のレスポンシブ対応かつ、表示速度の速い方法を採用する-->
             <%= link_to post_path(post.id) do %>
               <%= image_tag post.post_image, class:"card-img-top" %>
             <% end %>
@@ -20,7 +21,7 @@
         <div class="card-footer">
           <div class="row d-flex">
             <div class="col-4 justify-content-center">
-              <%= image_tag post.user.get_profile_image(55,55), class:"rounded-circle"; %><br>
+              <%= image_tag post.user.get_profile_image(55,55), class:"rounded-circle" %><br>
               <%= link_to "#{post.user.name}", user_path(post.user.id),class:"text-dark" %>
             </div>
             <div class="col-8">

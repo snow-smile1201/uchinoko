@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'inform_activities/index'
+  end
   # 管理者用
   # URL /admin/sign_in ...
   devise_for :admins, controllers: {
@@ -40,6 +43,9 @@ Rails.application.routes.draw do
     resources :posts, only: [:index,:new, :create, :show, :edit, :update, :destroy] do
       resources :post_comments, only: [:create, :destroy]
       resource :favorites, only: [:create, :destroy]
+    end
+    resources :inform_activities, only: [:index] do
+      patch :read, on: :member
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

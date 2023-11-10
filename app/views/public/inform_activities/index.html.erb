@@ -1,0 +1,10 @@
+<% if @activities.present? %>
+  <% @activities.each do |activity| %>
+    <%= link_to read_inform_activity_path(current_user.id,activity), method: :patch do %>
+      <%= activity.subject.name %>さんが<%= activity.action_type_i18n %><br>
+    <% end %>
+  <%= paginate @activities %>
+  <% end %>
+<% else %>
+  <p>通知はありません</p>
+<% end %>

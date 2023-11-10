@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_03_014442) do
+ActiveRecord::Schema.define(version: 2023_11_10_004031) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -74,6 +74,18 @@ ActiveRecord::Schema.define(version: 2023_11_03_014442) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "inform_activities", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "subject_type"
+    t.integer "subject_id"
+    t.integer "action_type", null: false
+    t.boolean "is_unread", default: true, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subject_type", "subject_id"], name: "index_inform_activities_on_subject"
+    t.index ["user_id"], name: "index_inform_activities_on_user_id"
   end
 
   create_table "post_comments", force: :cascade do |t|
@@ -144,6 +156,7 @@ ActiveRecord::Schema.define(version: 2023_11_03_014442) do
   add_foreign_key "children", "users"
   add_foreign_key "favorites", "posts"
   add_foreign_key "favorites", "users"
+  add_foreign_key "inform_activities", "users"
   add_foreign_key "post_comments", "posts"
   add_foreign_key "post_comments", "users"
   add_foreign_key "posts", "children"

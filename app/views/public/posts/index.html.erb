@@ -1,5 +1,5 @@
 <div class="card-list-container py-5 d-flex">
-  <div class="col-md-3 mt-4 ml-3">
+  <div class="col-md-2 mt-4 ml-3">
     <table class="table table-sm">
       <thead class="thead-light">
         <tr>
@@ -17,11 +17,11 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-8">
+  <div class="col-md-10">
     <%= render 'index', posts: @posts %>
   </div>
 </div>
-    <div class="col">
+    <div class="row mx-auto">
       <%= link_to new_post_path do %>
         <button type="button" class="btn btn-light rounded-circle p-0 shadow-sm" style="width:2rem;height:2rem;"><strong>＋</strong></button>
       <% end %>

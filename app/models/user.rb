@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :inform_activities, dependent: :destroy
   has_one_attached :profile_image
 
   #フォロー・フォロワーのリレーションの記述
@@ -25,7 +26,7 @@ class User < ApplicationRecord
       user.name = "guestuser"
     end
   end
-  
+
   def guest_user?
     email == GUEST_USER_EMAIL
   end
