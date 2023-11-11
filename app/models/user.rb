@@ -4,7 +4,6 @@ class User < ApplicationRecord
   GUEST_USER_EMAIL = "guest@example.com"
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
   has_many :children, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :post_comments, dependent: :destroy
@@ -15,9 +14,7 @@ class User < ApplicationRecord
   #フォロー・フォロワーのリレーションの記述
   has_many :followings, class_name: "UserRelationship", foreign_key: "following_id", dependent: :destroy
   has_many :followers, class_name: "UserRelationship", foreign_key: "follower_id", dependent: :destroy
-  #followingsr:中間テーブルを通してfollower(user)モデルのフォローされる側を取得
   has_many :following_users, through: :followings, source: :follower
-  #followers:中間テーブルを通してfollowings(user)モデルのフォローする側を取得
   has_many :follower_users, through: :followers, source: :following
 
   def self.guest
@@ -29,6 +26,10 @@ class User < ApplicationRecord
 
   def guest_user?
     email == GUEST_USER_EMAIL
+  end
+
+  def self.search_for(content)
+    User.where("name LIKE?","%#{content}%")
   end
 
   def get_profile_image(width, height)

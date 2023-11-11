@@ -18,7 +18,9 @@
         <div class="card-body row mx-auto">
           <p class="card-text">
             <% post.tags.each do |tag| %>
-              #<%= tag.hashname %>
+              <%= link_to hashtag_path(tag.hashname) do %>
+                #<%= tag.hashname %>
+              <% end %>
             <% end %>
           </p>
         </div>
@@ -36,7 +38,6 @@
                   <i class="fa-regular fa-comment-dots"></i>
                   <%= "#{post.post_comments.count}" %>
                 <% end %>
-
               </p>
             </div>
           </div>

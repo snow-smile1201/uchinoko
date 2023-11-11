@@ -29,7 +29,8 @@ Rails.application.routes.draw do
     get '/' => 'homes#top'
     get 'homes/about' => 'homes#about'
     get 'users/confirm_withdraw' => 'users#confirm_withdraw'
-    get '/post/hashtag/:name', to: "posts#hashtag", as: "hashtag"
+    get '/post/hashtag/:name' => 'posts#hashtag', as: 'hashtag'
+    get 'search' => 'searches#search'
 
     resources :users, only: [:index, :show, :edit, :update] do
       member do

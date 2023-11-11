@@ -1,64 +1,55 @@
-<div class="container px-5 px-sm-0">
-  <div class="row my-4">
-    <div class="col-12">
-      <h2><%= @post.child.name %>の成長記録 </h2>
+<div class="container">
+  <div class="row">
+    <h2><%= @post.child.name %>の成長記録</h2>
+    <% if @post.is_active == true %>
+      <strong style="color: white; background-color: green;">公開中</strong>
+    <% else %>
+      <strong style="color: white; background-color: gray;">公開停止中</strong>
+    <% end %>
+    <div class="card w-75 mx-2 mt-4 mx-auto shadow-lg">
+      <div class="row mx-auto mt-4">
+        <div class="col-10 mx-auto">
+            <p class="card-title">
+              <strong><i class="far fa-flag"></i><span><%= @post.title %></span></strong>
+            </p>
+            <!--TODO：画像のレスポンシブ対応かつ、表示速度の速い方法を採用する-->
+              <%= image_tag @post.post_image, class:"card-img-top" %>
+          </div>
+      </div>
+        <div class="card-body row mx-auto p-5">
+          <p class="card-text">
+            <!--TODO：simple_formatなので改行は1行のみ反映。safe_joinはハッシュタグのリンクが解除される-->
+            <%= simple_format(h(render_with_hashtags(@post.body))) %>
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="row d-flex">
+            <div class="col-4 justify-content-center">
+              <%= link_to "#{@post.user.name}", user_path(@post.user.id),class:"text-dark" %>
+            </div>
+            <div class="col-8">
+              <p>
+                <div id="favorite_button_<%= @post.id%>">
+                  <%= render 'public/favorites/favorite', post: @post %>
+                </div>
+                <%= link_to post_path(@post) do %>
+                  <i class="fa-regular fa-comment-dots"></i>
+                  <%= "#{@post.post_comments.count}" %>
+                <% end %>
+                ジャンル：<%= @post.genre.name %>
+              </p>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-4 p-5">
-      <%= image_tag @post.get_post_image(300, 300), class: 'item_image' %>
-    </div>
-    <div class="col-md-8 p-5">
-
-      <table class="table table-borderless">
-        <tbody>
-          <tr>
-            <th style="width: 25%;">タイトル</th>
-            <td><%= @post.title %></td>
-          </tr>
-          <tr>
-            <th>本文</th>
-            <td> <%= render_with_hashtags(@post.body) %></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table class="table table-borderless">
-        <tbody>
-          <tr>
-            <th style="width: 25%;">ジャンル</th>
-            <td><%= @post.genre.name %></td>
-          </tr>
-          <tr>
-          <tr>
-            <th style="width: 25%;">タグ</th>
-            <td>
-              <% @post.tags.each do |tag| %>
-                <%= link_to hashtag_path(tag.hashname) do %>
-                  #<%= tag.hashname %>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-          <tr>
-            <th>公開ステータス</th>
-            <% if @post.is_active == true %>
-              <td><strong style="color: green;">公開中</strong></td>
-            <% else %>
-              <td><strong style="color: gray;">公開停止中</strong></td>
-            <% end %>
-          </tr>
-        </tbody>
-      </table>
+</div>
+      <div>
       <%if @post.user == current_user %>
         <%= link_to '編集', edit_post_path(@post), class:"btn btn-success ml-3" %>
         <%= link_to '削除', post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger ml-3" %>
       <% end %>
     </div>
-  </div>
-  <div id="favorite_button_<%= @post.id%>">
-    <%= render 'public/favorites/favorite', post: @post %>
-  </div>
   <div id="post_comments">
     コメント数：<%= @post.post_comments.count %>
   <%= render 'public/post_comments/show', post: @post %>

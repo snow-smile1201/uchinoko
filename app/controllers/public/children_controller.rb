@@ -1,13 +1,13 @@
 class Public::ChildrenController < ApplicationController
   def index
     @child = Child.new
-    @children = current_user.children.all
+    @children = current_user.children
   end
 
   def create
     @child = Child.new(child_params)
     @child.user_id = current_user.id
-    @children = current_user.children.all
+    @children = current_user.children
     if @child.save
       redirect_to children_path
     else

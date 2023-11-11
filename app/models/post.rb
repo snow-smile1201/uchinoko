@@ -17,11 +17,14 @@ class Post < ApplicationRecord
     post_image.variant(resize_to_limit: [width, height]).processed
   end
 
-  #ユーザーが当該投稿をいいねしているかの判定メソッド
+  #ユーザーが投稿をいいねしているかの判定
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
 
+  def self.search_for(content)
+    Post.where("title LIKE?","%#{content}%")
+  end
   #ハッシュタグ投稿用メソッド
   after_create do
     post = Post.find_by(id: self.id)
@@ -42,5 +45,4 @@ class Post < ApplicationRecord
       post.tags << tag
     end
   end
-
 end

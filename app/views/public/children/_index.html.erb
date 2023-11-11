@@ -17,7 +17,13 @@
           <span class="ml-1"><%= "(#{child.posts.count})" %></span>
         </td>
         <td><%= child.birthday %></td>
-        <td>子供のいいね総数</td>
+        <td>
+          <% child.posts.each do |post| %>
+            <% @total_favorites = 0 %>
+            <% @total_favorites += post.favorites.count %>
+          <% end %>
+          <%= @total_favorites %>
+        </td>
         <td>子供の記事の閲覧総数</td>
         <td>
           <%= link_to edit_child_path(child) do %>

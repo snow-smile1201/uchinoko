@@ -1,0 +1,17 @@
+<div class="container px-sm-0 px-5" >
+  <% if @range == "User" %>
+    <div class="row my-4">
+      <h3>ユーザー検索結果</h3>
+    </div>
+    <div class="row">
+      <%= render 'public/users/index', users: @records%>
+    </div>
+  <% else %>
+    <div class="row my-4">
+      <h3>投稿検索結果</h3>
+    </div>
+    <div class="row">
+      <%= render 'public/posts/index', posts: @records%>
+    </div>
+  <% end %>
+</div>

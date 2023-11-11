@@ -10,7 +10,6 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body class="d-flex flex-column vh-100">
     <header class="shadow-sm">
       <nav class="navbar navbar-expand-lg navbar-light">
@@ -21,9 +20,9 @@
                         aria-controls="navbarNavDropdown" aria-expand="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <div class="collapse navbar-collapse flex-column" id="navbarNavDropdown">
+            <%if user_signed_in? %>
             <ul class="navbar-nav ml-auto">
-              <%if user_signed_in? %>
               <li class="nav-item">
                 <%= link_to "mypage", user_path(current_user.id), class: 'nav-link text-dark' %>
               </li>
@@ -37,9 +36,16 @@
                 <%= link_to "logout", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
               </li>
               <li class="nav-item">
-                <%= link_to "tuuchi", inform_activities_path, class: 'nav-link text-dark' %><span class="bg-danger rounded-circle" style="color :white;"><%= current_user.inform_activities.count %></span>
+                <%= link_to "tuuchi", inform_activities_path, class: 'nav-link text-dark' %>
               </li>
-              <% else %>
+              </ul>
+              <ul class="navbar-nav ml-auto">
+                <li>
+                  <%= render 'layouts/search' %>
+                </li>
+              </ul>
+            <% else %>
+            <ul class="navbar-nav ml-auto">
               <li class="nav-item">
                 <%= link_to "registration", new_user_registration_path, class: 'nav-link text-dark' %>
               </li>
