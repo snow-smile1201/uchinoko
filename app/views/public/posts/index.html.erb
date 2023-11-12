@@ -1,3 +1,4 @@
+
 <div class="card-list-container py-5 d-flex">
   <div class="col-md-2 mt-4 ml-3">
     <table class="table table-sm">
@@ -17,12 +18,17 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-10">
-    <%= render 'index', posts: @posts %>
-  </div>
-</div>
+  <div class="col-md-10 px-5">
+    <div class="row h-100">
+      <% @posts.each do |post|%>
+      <div class="col-sm-12 col-md-6">
+        <%= render partial: 'index', locals:{ post: post } %>
+      </div>
+      <% end %>
+    </div>
     <div class="row mx-auto">
       <%= link_to new_post_path do %>
         <button type="button" class="btn btn-light rounded-circle p-0 shadow-sm" style="width:2rem;height:2rem;"><strong>＋</strong></button>
       <% end %>
     </div>
+  </div>

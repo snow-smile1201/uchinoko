@@ -12,8 +12,7 @@
             <p class="card-title">
               <strong><i class="far fa-flag"></i><span><%= @post.title %></span></strong>
             </p>
-            <!--TODO：画像のレスポンシブ対応かつ、表示速度の速い方法を採用する-->
-              <%= image_tag @post.post_image, class:"card-img-top" %>
+              <%= image_tag @post.get_post_image(1000, 1000), class:"card-img-top" %>
           </div>
       </div>
         <div class="card-body row mx-auto p-5">

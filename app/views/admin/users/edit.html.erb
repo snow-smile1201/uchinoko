@@ -1,2 +1,30 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<div class="container px-sm-0 px-5">
+  <div class="row my-4">
+    <h3>ユーザープロフィール詳細・編集</h3>
+  </div>
+  <div class="row px-sm-0 px-5">
+    <div class="col-md-8 px-5 px-sm-0">
+      <%= render "admin/shared/error_messages", resource: @user %>
+      <%= form_with model: @user, url: admin_user_path(@user), method: :patch do |f| %>
+        <table class="table table-borderless">
+          <tbody>
+            <tr colspan = "2">
+              <td><%= image_tag @user.get_profile_image(100, 100), class: "my-3 rounded-circle" %></td>
+              <td><%= @user.name %><br><%= @user.policy %><br><%= @user.email %></td>
+            </tr>
+            <tr>
+              <th><%= f.label :is_active, "公開ステータス" %></th>
+                <td>
+                  <strong><%= f.label :is_active_true, "有効"%></strong>
+                  <%= f.radio_button :is_active, true %>
+                  <strong class="ml-5" style="color: gray;"><%= f.label :is_active_false, "公開停止"%></strong>
+                  <%= f.radio_button :is_active, false %>
+                </td>
+              <td><%= f.submit '更新',class:"btn btn-success" %></td>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -2,11 +2,13 @@ class Public::PostsController < ApplicationController
   def index
     @genres = Genre.all
     #ユーザーとフォローしているユーザーの投稿を取得
-    posts = Post.where(user_id: [current_user.id, current_user.following_ids])
+    following_users_ids = current_user.following_ids
+    posts = Post.where(user_id: [current_user.id, *following_users_ids])
     @posts = posts.sort_by(&:created_at).reverse
   end
 
   def new
+    @user = current_user
     @post = Post.new
   end
 

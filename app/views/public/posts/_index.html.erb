@@ -1,22 +1,21 @@
+<!--TODO:カードの高さを揃える,イメージの大きさはcssでobject-fit containすることを検討-->
 <div class="container">
   <div class="row">
-    <% posts.each do |post|%>
-    <div class="card w-50 mx-2 mt-4 shadow-lg">
-      <div class="row mx-auto mt-4">
-        <div class="col-10 mx-auto">
-            <p class="card-title">
-              <%= link_to(post_path(post.id), class:"text-dark") do %>
-              <strong><i class="far fa-flag"></i><span><%= post.title %></span></strong>
-              <% end %>
-            </p>
-            <!--TODO：画像のレスポンシブ対応かつ、表示速度の速い方法を採用する-->
-            <%= link_to post_path(post.id) do %>
-              <%= image_tag post.post_image, class:"card-img-top" %>
+    <div class="card w-100 h-100 d-flex mt-4 shadow-lg">
+      <div class="row mt-4">
+        <div class="col-11 mx-auto">
+          <p class="card-title px-5">
+            <%= link_to(post_path(post.id), class:"text-dark") do %>
+            <strong><i class="far fa-flag"></i><span><%= post.title %></span></strong>
             <% end %>
-          </div>
+          </p>
+        </div>
       </div>
-        <div class="card-body row mx-auto">
-          <p class="card-text">
+        <div class="card-body row flex-column mx-auto">
+          <%= link_to post_path(post.id) do %>
+              <%= image_tag post.get_post_image(300, 300), class:"img-fluid img-thumbnail" %>
+            <% end %>
+          <p class="card-text mt-3">
             <% post.tags.each do |tag| %>
               <%= link_to hashtag_path(tag.hashname) do %>
                 #<%= tag.hashname %>
@@ -25,7 +24,7 @@
           </p>
         </div>
         <div class="card-footer">
-          <div class="row d-flex">
+          <div class="row-10 d-flex">
             <div class="col-4 justify-content-center">
               <%= image_tag post.user.get_profile_image(55,55), class:"rounded-circle" %><br>
               <%= link_to "#{post.user.name}", user_path(post.user.id),class:"text-dark" %>
@@ -43,6 +42,5 @@
           </div>
         </div>
     </div>
-    <% end %>
   </div>
 </div>

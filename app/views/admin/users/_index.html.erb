@@ -1,0 +1,41 @@
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Kodomo</th>
+        <th>投稿数</th>
+        <th>フォワー</th>
+        <th>ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.each do |user| %>
+        <tr>
+          <td>
+            <%= image_tag user.get_profile_image(50, 50) %>
+          </td>
+          <td>
+            <%= link_to admin_user_path(user.id) do %>
+            <%= user.name %>
+            <% end %>
+          </td>
+          <td><%= user.children.count %></td>
+          <td><%= user.posts.count %></td>
+          <td><%= user.followers.count %></td>
+          <td>
+            <%if user.is_active == true %>
+              <%= "有効" %>
+            <% else %>
+              <%= "停止中" %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_admin_user_path(user) do %>
+            <i class="fa-solid fa-pen-to-square"></i>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

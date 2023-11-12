@@ -9,3 +9,8 @@ genres = [
 genres.each do |genre|
   Genre.find_or_create_by(genre)
 end
+
+Admin.create!(
+   email: 'admin@admin',
+   password: 'admin1'
+)

@@ -52,4 +52,8 @@ class User < ApplicationRecord
   def following?(user)
     following_users.include?(user)
   end
+
+  def unpublish_posts
+    self.posts.update_all(is_active: false)
+  end
 end

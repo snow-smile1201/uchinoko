@@ -2,7 +2,7 @@
     <tbody>
       <tr>
         <th><%= f.label :child_id, "うちのこ" %></th>
-        <td><%= f.collection_select :child_id, Child.all, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
+        <td><%= f.collection_select :child_id, @user.children, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
       </tr>
       <tr>
         <th><%= f.label :post_image, "画像" %></th>
