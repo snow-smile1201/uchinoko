@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2023_11_10_004031) do
 
   create_table "post_comments", force: :cascade do |t|
     t.text "comment"
+    t.boolean "is_banned", default: false, null: false
     t.integer "user_id", null: false
     t.integer "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -102,6 +103,7 @@ ActiveRecord::Schema.define(version: 2023_11_10_004031) do
     t.string "title", null: false
     t.text "body", null: false
     t.boolean "is_active", default: true, null: false
+    t.boolean "is_banned", default: false, null: false
     t.integer "genre_id", null: false
     t.integer "user_id", null: false
     t.integer "child_id", null: false
@@ -145,6 +147,7 @@ ActiveRecord::Schema.define(version: 2023_11_10_004031) do
     t.string "name", null: false
     t.text "policy"
     t.boolean "is_active", default: true, null: false
+    t.boolean "is_banned", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true

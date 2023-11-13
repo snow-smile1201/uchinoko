@@ -21,8 +21,9 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show, :edit, :update]
     resources :genres, only: [:index, :create, :edit, :update]
     resources :posts, only: [:index, :show, :edit, :update] do
-      resources :post_comments, only: [:create, :destroy]
+      resources :post_comments, only: [:create, :destroy, :update]
     end
+    resources :tags, only: [:index]
   end
 
   scope module: :public do

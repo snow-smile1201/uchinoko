@@ -13,12 +13,12 @@
       <% posts.each do |post| %>
         <tr>
           <td>
-            <%= link_to admin_post_path(post.id) do %>
+            <%= link_to edit_admin_post_path(post.id) do %>
             <%= post.title %>
             <% end %>
           </td>
            <td>
-            <%= link_to admin_user_path(post.user.id) do %>
+            <%= link_to edit_admin_user_path(post.user.id) do %>
             <%= post.user.name %>
             <% end %>
           </td>
@@ -26,10 +26,12 @@
           <td><%= post.post_comments.count %></td>
           <td><%= "閲覧数" %></td>
           <td>
-            <%if post.is_active == true %>
-              <%= "公開中" %>
+            <% if post.is_banned == true %>
+              <%= "公開停止" %>
+            <% elsif post.is_active == false %>
+              <%= "非公開設定" %>
             <% else %>
-              <%= "非公開" %>
+              <%= "公開中" %>
             <% end %>
           </td>
           <td>

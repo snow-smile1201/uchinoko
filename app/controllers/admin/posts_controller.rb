@@ -23,7 +23,7 @@ class Admin::PostsController < ApplicationController
   private
   
   def post_params
-    params.require(:post).permit(:title, :body, :children_id, :genre_id, :is_active, :post_image)
+    params.require(:post).permit(:title, :body, :children_id, :genre_id, :is_active, :is_banned, :post_image)
   end
     
 end

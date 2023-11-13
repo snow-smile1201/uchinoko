@@ -1,10 +1,12 @@
-  <table class="table">
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Kodomo</th>
+        <th></th>
+        <th>ユーザー名</th>
         <th>投稿数</th>
+        <th>投稿停止</th>
+        <th>コメント数</th>
+        <th>削除コメント数</th>
         <th>フォワー</th>
         <th>ステータス</th>
       </tr>
@@ -16,24 +18,23 @@
             <%= image_tag user.get_profile_image(50, 50) %>
           </td>
           <td>
-            <%= link_to admin_user_path(user.id) do %>
+            <%= link_to edit_admin_user_path(user.id) do %>
             <%= user.name %>
             <% end %>
           </td>
-          <td><%= user.children.count %></td>
           <td><%= user.posts.count %></td>
+          <td><%= user.banned_posts_count %></td>
+          <td><%= user.post_comments.count %></td>
+          <td><%= user.banned_comments_count %></td>
           <td><%= user.followers.count %></td>
           <td>
-            <%if user.is_active == true %>
-              <%= "有効" %>
-            <% else %>
+            <%if user.is_banned == true %>
               <%= "停止中" %>
+            <% elsif user.is_active == false %>
+              <%= "退会" %>
+            <% else %>
+              <%= "有効" %>
             <% end %>
-          </td>
-          <td>
-            <%= link_to edit_admin_user_path(user) do %>
-            <i class="fa-solid fa-pen-to-square"></i>
-          <% end %>
           </td>
         </tr>
       <% end %>

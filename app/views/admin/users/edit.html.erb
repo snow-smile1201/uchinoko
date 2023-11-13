@@ -8,19 +8,25 @@
       <%= form_with model: @user, url: admin_user_path(@user), method: :patch do |f| %>
         <table class="table table-borderless">
           <tbody>
-            <tr colspan = "2">
-              <td><%= image_tag @user.get_profile_image(100, 100), class: "my-3 rounded-circle" %></td>
-              <td><%= @user.name %><br><%= @user.policy %><br><%= @user.email %></td>
+            <tr>
+              <td rowspan="3"><%= image_tag @user.get_profile_image(100, 100), class: "my-3 rounded-circle" %></td>
+              <td><%= @user.name %></td>
             </tr>
             <tr>
-              <th><%= f.label :is_active, "公開ステータス" %></th>
+              <td><%= @user.email %></td>
+            </tr>
+            <tr>
+              <td><%= @user.policy %></td>
+            </tr>
+            <tr>
+              <th><%= f.label :is_banned, "公開ステータス" %></th>
                 <td>
-                  <strong><%= f.label :is_active_true, "有効"%></strong>
-                  <%= f.radio_button :is_active, true %>
-                  <strong class="ml-5" style="color: gray;"><%= f.label :is_active_false, "公開停止"%></strong>
-                  <%= f.radio_button :is_active, false %>
+                  <strong style="color: red;"><%= f.label :is_banned_true, "公開停止"%></strong>
+                  <%= f.radio_button :is_banned, true %>
+                  <strong class="ml-5"><%= f.label :is_banned_false, "有効"%></strong>
+                  <%= f.radio_button :is_banned, false %>
                 </td>
-              <td><%= f.submit '更新',class:"btn btn-success" %></td>
+              <td><%= f.submit '変更',class:"btn btn-danger", "data-confirm" => "変更を確定します。よろしいですか？" %></td>
             </tr>
           </tbody>
         </table>

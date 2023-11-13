@@ -1,2 +1,36 @@
-<h1>Admin::Tags#index</h1>
-<p>Find me in app/views/admin/tags/index.html.erb</p>
+ <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ハッシュタグ</th>
+        <th>投稿数</th>
+        <th>いいね数</th>
+        <th>コメント数</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @tags.each do |tag| %>
+        <tr>
+          <td>
+            <!--タグの詳細ページ実装予定-->
+            #<%= tag.hashname %>
+          </td>
+          <td>
+            <!--タグに紐づく投稿のいいね数をカウント-->
+            <% tag.posts.each do |post| %>
+              <% post.favorites.count %>
+            <% end %>
+          </td>
+          <td></td>
+          <td></td>
+          <td><%= %></td>
+          <td><%=  %></td>
+          <td><%=  %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

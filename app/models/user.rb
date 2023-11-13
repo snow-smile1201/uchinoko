@@ -48,12 +48,23 @@ class User < ApplicationRecord
     followings.find_by(follower_id: user_id).destroy
   end
 
-  # フォローしていればtrueを返す
   def following?(user)
     following_users.include?(user)
   end
 
   def unpublish_posts
     self.posts.update_all(is_active: false)
+  end
+
+  def publish_posts
+    self.posts.update_all(is_active: true)
+  end
+
+  def banned_posts_count
+    self.posts.where(is_banned: true).count
+  end
+
+  def banned_comments_count
+    self.post_comments.where(is_banned: true).count
   end
 end

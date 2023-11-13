@@ -12,11 +12,9 @@ class Public::PostCommentsController < ApplicationController
     comment.destroy
   end
 
-
-
   private
 
   def post_comment_params
-    params.require(:post_comment).permit(:comment)
+    params.require(:post_comment).permit(:comment, :is_banned)
   end
 end

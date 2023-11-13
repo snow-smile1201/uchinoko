@@ -17,7 +17,6 @@ class Post < ApplicationRecord
     post_image.variant(resize_to_limit: [width, height]).processed
   end
 
-  #ユーザーが投稿をいいねしているかの判定
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end

@@ -35,7 +35,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.string :name, null: false
       t.text :policy
       t.boolean :is_active, null: false, default: true
-
+      t.boolean :is_banned, null: false, default: false
       t.timestamps null: false
     end
 

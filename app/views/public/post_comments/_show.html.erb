@@ -1,8 +1,12 @@
 <% post.post_comments.each do |post_comment| %>
-  <!--<p>%= image_tag post_comment.user.get_profile_image(100,100) %></p>-->
-  <%= post_comment.user.name %>
-  <%= post_comment.created_at.strftime('%Y/%m/%d') %><br><%= post_comment.comment %><br>
-  <%if post_comment.user == current_user %>
-    <%= link_to '削除', post_post_comment_path(post, post_comment), method: :delete, "data-confirm" => "本当に削除しますか？", remote: true, data: { "turbolinks" => false }, class: "btn btn-danger ml-3" %><br>
+  <% unless post_comment.is_banned == true %>
+    <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
+    <%= post_comment.user.name %>
+    <%= post_comment.created_at.strftime('%Y/%m/%d') %><br><%= post_comment.comment %><br>
+    <% if post_comment.user == current_user %>
+      <%= link_to '削除', post_post_comment_path(post, post_comment), method: :delete, "data-confirm" => "本当に削除しますか？", remote: true, data: { "turbolinks" => false }, class: "btn btn-danger ml-3" %><br>
+    <% elsif admin_signed_in? %>
+      <%= link_to '停止', admin_post_post_comment_path(post, post_comment), method: :patch, "data-confirm" => "本当に停止しますか？", local: true, data: { "turbolinks" => false }, class: "btn btn-danger ml-3" %><br>
+    <% end %>
   <% end %>
 <% end %>
