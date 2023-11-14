@@ -21,9 +21,11 @@
   <div class="col-md-10 px-5">
     <div class="row h-100">
       <% @posts.each do |post|%>
-      <div class="col-sm-12 col-md-6">
-        <%= render partial: 'index', locals:{ post: post } %>
-      </div>
+        <% unless post.is_banned == true || post.is_active == false %>
+        <div class="col-sm-12 col-md-6">
+          <%= render partial: 'index', locals:{ post: post } %>
+        </div>
+        <% end %>
       <% end %>
     </div>
     <div class="row mx-auto">

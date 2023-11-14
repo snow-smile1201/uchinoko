@@ -14,7 +14,7 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      #ユーザーを公開停止すると投稿も非公開にする
+      #ユーザーを公開停止すると投稿も非公停止にする
       if @user.is_banned == true
         @user.unpublish_posts if @user.posts.exists?
       #ユーザーを公開すると投稿も公開になる

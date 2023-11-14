@@ -34,6 +34,11 @@ class Public::UsersController < ApplicationController
   end
 
   def withdraw
+    @user = User.find(params[:id])
+    @user.update(is_active: false)
+    reset_session
+    flash[:notice] = "退会処理を実行いたしました"
+    redirect_to top_path
   end
 
   def confirm_withdraw

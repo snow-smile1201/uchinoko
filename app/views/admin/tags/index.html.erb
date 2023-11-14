@@ -1,38 +1,8 @@
- <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>ハッシュタグ</th>
-        <th>投稿数</th>
-        <th>いいね数</th>
-        <th>コメント数</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-
-      <% @tags.each do |tag| %>
-        <tr>
-          <td>
-            <!--タグの詳細ページ実装予定-->
-            #<%= tag.hashname %>
-          </td>
-          <td>
-            <!--タグに紐づく投稿のいいね数をカウント-->
-            <% tag.posts.each do |post| %>
-              <%total_favorites = 0%>
-              <% totalfavorites += post.favorites.count %>
-            <% end %>
-            <%= total_favorites %>
-          </td>
-          <td></td>
-          <td></td>
-          <td><%= %></td>
-          <td><%=  %></td>
-          <td><%=  %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-10">
+        <h2>ハッシュタグ情報</h2>
+       <%= render 'admin/tags/index',tags: @tags %>
+      </div>
+    </div>
+  </div>

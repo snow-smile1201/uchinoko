@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   # URL /users/sign_in ...
   devise_for :users, controllers: {
     registrations: "public/registrations",
-    sessions: "public/sessions",
-    passwords: "public/passwords"
+    sessions: "public/sessions"
   }
 
   devise_scope :user do
@@ -18,9 +17,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/' => 'homes#top'
-    resources :users, only: [:index, :show, :edit, :update]
+    resources :users, only: [:index, :edit, :update]
     resources :genres, only: [:index, :create, :edit, :update]
-    resources :posts, only: [:index, :show, :edit, :update] do
+    resources :posts, only: [:index, :edit, :update] do
       resources :post_comments, only: [:create, :destroy, :update]
     end
     resources :tags, only: [:index]
@@ -29,7 +28,8 @@ Rails.application.routes.draw do
   scope module: :public do
     get '/' => 'homes#top'
     get 'homes/about' => 'homes#about'
-    get 'users/confirm_withdraw' => 'users#confirm_withdraw'
+    get 'users/confirm_withdraw' => 'users#confirm_withdraw', as: 'confirm_withdraw'
+    patch 'users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
     get '/post/hashtag/:name' => 'posts#hashtag', as: 'hashtag'
     get 'search' => 'searches#search'
 

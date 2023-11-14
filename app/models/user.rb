@@ -53,11 +53,11 @@ class User < ApplicationRecord
   end
 
   def unpublish_posts
-    self.posts.update_all(is_active: false)
+    self.posts.update_all(is_banned: true)
   end
 
   def publish_posts
-    self.posts.update_all(is_active: true)
+    self.posts.update_all(is_banned: false)
   end
 
   def banned_posts_count
@@ -66,5 +66,9 @@ class User < ApplicationRecord
 
   def banned_comments_count
     self.post_comments.where(is_banned: true).count
+  end
+
+  def active_for_authentication?
+    super && (is_active == true )
   end
 end
