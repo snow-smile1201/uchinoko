@@ -22,8 +22,10 @@
           <td>
             <!--タグに紐づく投稿のいいね数をカウント-->
             <% tag.posts.each do |post| %>
-              <% post.favorites.count %>
+              <%total_favorites = 0%>
+              <% totalfavorites += post.favorites.count %>
             <% end %>
+            <%= total_favorites %>
           </td>
           <td></td>
           <td></td>
