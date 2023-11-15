@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    get '/' => 'homes#top'
+    root to: 'homes#top'
     resources :users, only: [:index, :edit, :update]
     resources :genres, only: [:index, :create, :edit, :update]
     resources :posts, only: [:index, :edit, :update] do
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   scope module: :public do
-    get '/' => 'homes#top'
+    root to: 'homes#top'
     get 'homes/about' => 'homes#about'
     get 'users/confirm_withdraw' => 'users#confirm_withdraw', as: 'confirm_withdraw'
     patch 'users/:id/withdraw' => 'users#withdraw', as: 'withdraw'

@@ -1,0 +1,18 @@
+<table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>累計登録者数</th>
+            <th>現ユーザー数</th>
+            <th>累計退会者数</th>
+            <th>累計停止者数</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td><%= users.count %></td>
+              <td><%= users.where(is_active: true).count %></td>
+              <td><%= users.where(is_active: false).count %></td>
+              <td><%= users.where(is_banned: true).count %></td>
+            </tr>
+        </tbody>
+      </table>

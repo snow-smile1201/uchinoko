@@ -5,41 +5,31 @@
         <th>ユーザー名</th>
         <th>いいね数</th>
         <th>コメント数</th>
-        <th>閲覧数</th>
-        <th>ステータス</th>
+        <th>公開設定</th>
+        <th>管理ステータス</th>
       </tr>
     </thead>
     <tbody>
       <% posts.each do |post| %>
-        <tr>
-          <td>
-            <%= link_to edit_admin_post_path(post.id) do %>
-            <%= post.title %>
-            <% end %>
-          </td>
-           <td>
-            <%= link_to edit_admin_user_path(post.user.id) do %>
-            <%= post.user.name %>
-            <% end %>
-          </td>
-          <td><%= post.favorites.count %></td>
-          <td><%= post.post_comments.count %></td>
-          <td><%= "閲覧数" %></td>
-          <td>
-            <% if post.is_banned == true %>
-              <%= "公開停止" %>
-            <% elsif post.is_active == false %>
-              <%= "非公開設定" %>
-            <% else %>
-              <%= "公開中" %>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to edit_admin_post_path(post) do %>
-            <i class="fa-solid fa-pen-to-square"></i>
-          <% end %>
-          </td>
-        </tr>
+      <!--ユーザーにより公開の設定がされているものを管理・閲覧対象とする。管理者が公開停止したものは管理者だけ見える。-->
+        <% unless post.is_active == false %>
+          <tr>
+            <td>
+              <%= link_to edit_admin_post_path(post.id) do %>
+              <%= post.title %>
+              <% end %>
+            </td>
+             <td>
+              <%= link_to edit_admin_user_path(post.user.id) do %>
+              <%= post.user.name %>
+              <% end %>
+            </td>
+            <td><%= post.favorites.count %></td>
+            <td><%= post.post_comments.count %></td>
+            <td><%= post.is_active? %></td>
+            <td><%= post.is_banned? %></td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>

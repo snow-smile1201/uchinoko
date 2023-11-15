@@ -34,6 +34,10 @@ class User < ApplicationRecord
     email == GUEST_USER_EMAIL
   end
 
+  def is_active?
+    self.is_active == true ? "有効" : "退会済"
+  end
+
   def self.search_for(content)
     User.where("name LIKE?","%#{content}%")
   end

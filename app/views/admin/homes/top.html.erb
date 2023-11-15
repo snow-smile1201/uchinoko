@@ -1,45 +1,10 @@
 <div class="container px-5 px-sm-0">
   <div class="row my-4 ml-3">
-    <h2>登録状況</h2>
   </div>
   <div class="row">
     <div class="col-md-10 mx-auto">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>累計登録者数</th>
-            <th>現ユーザー数</th>
-            <th>累計退会者数</th>
-            <th>累計停止者数</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td><%= @users.count %></td>
-              <td><%= @users.where(is_active: true).count %></td>
-              <td><%= @users.where(is_active: false).count %></td>
-              <td><%= @users.where(is_banned: true).count %></td>
-            </tr>
-        </tbody>
-      </table>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>累計投稿数</th>
-            <th>公開投稿数</th>
-            <th>非公開投稿数</th>
-            <th>累計停止数</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td><%= @posts.count %></td>
-              <td><%= @posts.where(is_active: true).count %></td>
-              <td><%= @posts.where(is_active: false).count %></td>
-              <td><%= @posts.where(is_banned: true).count %></td>
-            </tr>
-        </tbody>
-      </table>
+      <h2>ユーザー登録状況</h2>
+      <%= render 'admin/homes/table_for_users', users: @users %>
       <h2>過去一週間の登録状況</h2>
       <table class="table table-bordered">
         <thead>
@@ -63,42 +28,9 @@
       </table>
       <canvas id="userLineChart"></canvas>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script>
-        $(document).on('turbolinks:load', function() {
-          var ctx = document.getElementById("userLineChart");
-          var userLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
-              datasets: [
-                {
-                  label: '登録ユーザー数',
-                  data: <%= @users.past_week_count %>,
-                  borderColor: "rgba(0,0,255,1)",
-                  backgroundColor: "rgba(0,0,0,0)",
-                  tension: 0.3
-                }
-              ],
-            },
-            options: {
-              title: {
-                display: true,
-                text: '一週間の登録者数推移'
-              },
-              responsive :true,
-              scales: {
-                y:{
-                  suggestedMin: 0,
-                  suggestedMax: 10
-                },
-                x:{
-                  stacked: true
-                },
-              },
-            }
-          });
-        });
-      </script>
+      <%= render 'admin/homes/chart_for_users', users: @users %>
+      <h2>投稿状況</h2>
+      <%= render 'admin/homes/table_for_posts', posts: @posts %>
       <h2>過去一週間の投稿状況</h2>
       <table class="table table-bordered">
         <thead>
@@ -122,42 +54,7 @@
       </table>
       <canvas id="postLineChart"></canvas>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script>
-        $(document).on('turbolinks:load', function() {
-          var ctx = document.getElementById("postLineChart");
-          var userLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
-              datasets: [
-                {
-                  label: '投稿数',
-                  data: <%= @posts.past_week_count %>,
-                  borderColor: "rgba(0,0,255,1)",
-                  backgroundColor: "rgba(0,0,0,0)",
-                  tension: 0.3
-                }
-              ],
-            },
-            options: {
-              title: {
-                display: true,
-                text: '一週間の投稿数推移'
-              },
-              responsive :true,
-              scales: {
-                y:{
-                  suggestedMin: 0,
-                  suggestedMax: 10
-                },
-                x:{
-                  stacked: true
-                },
-              },
-            }
-          });
-        });
-      </script>
+      <%= render 'admin/homes/chart_for_posts', posts: @posts %>
     </div>
   </div>
 </div>

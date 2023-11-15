@@ -22,6 +22,14 @@ class Post < ApplicationRecord
     post_image.variant(resize_to_limit: [width, height]).processed
   end
 
+  def is_active?
+    self.is_active == true ? "公開" : "非公開"
+  end
+
+  def is_banned?
+    self.is_banned == true ? "停止" : "有効"
+  end
+
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end

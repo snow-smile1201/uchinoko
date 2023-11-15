@@ -3,34 +3,40 @@
     <h3>ユーザープロフィール詳細・編集</h3>
   </div>
   <div class="row px-sm-0 px-5">
-    <div class="col-md-8 px-5 px-sm-0">
+    <div class="col-md-10 px-5 px-sm-0">
       <%= render "admin/shared/error_messages", resource: @user %>
       <%= form_with model: @user, url: admin_user_path(@user), method: :patch do |f| %>
         <table class="table table-borderless">
           <tbody>
             <tr>
-              <td rowspan="3"><%= image_tag @user.get_profile_image(100, 100), class: "my-3 rounded-circle" %></td>
-              <td><%= @user.name %></td>
+              <td rowspan="4"><%= image_tag @user.get_profile_image(100, 100), class: "my-3 rounded-circle" %></td>
+              <td>ユーザー名：<%= @user.name %></td>
             </tr>
             <tr>
-              <td><%= @user.email %></td>
+              <td>メールアドレス：<%= @user.email %></td>
             </tr>
             <tr>
-              <td><%= @user.policy %></td>
+              <td>教育方針：<%= @user.policy %></td>
             </tr>
             <tr>
-              <th><%= f.label :is_banned, "公開ステータス" %></th>
-                <td>
-                  <strong style="color: red;"><%= f.label :is_banned_true, "公開停止"%></strong>
-                  <%= f.radio_button :is_banned, true %>
-                  <strong class="ml-5"><%= f.label :is_banned_false, "有効"%></strong>
-                  <%= f.radio_button :is_banned, false %>
-                </td>
-              <td><%= f.submit '変更',class:"btn btn-danger", "data-confirm" => "変更を確定します。よろしいですか？" %></td>
+              <td>ステータス：<strong><%= @user.is_active? %></strong></td>
+            </tr>
+            <tr>
+              <th><%= f.label :is_banned, "管理ステータス" %></th>
+              <td>
+                <strong style="color: green;"><%= f.label :is_banned_false, "有効"%></strong>
+                <%= f.radio_button :is_banned, false %>
+                <strong class="ml-5" style="color: red;"><%= f.label :is_banned_true, "公開停止"%></strong>
+                <%= f.radio_button :is_banned, true %>
+                <%= f.submit '変更',class:"btn btn-danger ml-5", "data-confirm" => "変更を確定します。よろしいですか？" %>
+              </td>
             </tr>
           </tbody>
         </table>
       <% end %>
+    </div>
+    <div class="row">
+      <%= render 'admin/posts/index', posts: @posts %>
     </div>
   </div>
 </div>
