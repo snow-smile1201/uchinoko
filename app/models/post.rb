@@ -6,8 +6,13 @@ class Post < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :tag_relationships, dependent: :destroy
   has_many :tags, through: :tag_relationships
-
   has_one_attached :post_image
+  #引数にnを設定し、n日前の投稿数を取得
+  scope :created_days_ago, -> (n) { where(created_at: n.days.ago.all_day) }
+  #n日間の投稿数を取得、一週間前のデータから配列に格納
+  def self.past_week_count
+    (0..6).map { |n| created_days_ago(n).count }.reverse
+  end
 
   def get_post_image(width, height)
     unless post_image.attached?
@@ -24,7 +29,7 @@ class Post < ApplicationRecord
   def self.search_for(content)
     Post.where("title LIKE?","%#{content}%")
   end
-  #ハッシュタグ投稿用メソッド
+  #postのcreateアクション後に投稿のbodyから#をスキャンし、すでに作成済みタグのはfind,新しいタグはタグモデルのhashnameカラムに格納
   after_create do
     post = Post.find_by(id: self.id)
     hashtags = self.body.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
@@ -34,7 +39,7 @@ class Post < ApplicationRecord
       post.tags << tag
     end
   end
-
+#postのupdateアクション前にタグをクリアした上で上記同様の処理を実行
   before_update do
     post = Post.find_by(id: self.id)
     post.tags.clear

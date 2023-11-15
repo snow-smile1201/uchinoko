@@ -16,6 +16,12 @@ class User < ApplicationRecord
   has_many :followers, class_name: "UserRelationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following_users, through: :followings, source: :follower
   has_many :follower_users, through: :followers, source: :following
+  #引数にnを設定し、n日前の投稿数を取得
+  scope :created_days_ago, -> (n) { where(created_at: n.days.ago.all_day) }
+  #n日間の投稿数を取得、一週間前のデータから配列に格納
+  def self.past_week_count
+    (0..6).map { |n| created_days_ago(n).count }.reverse
+  end
 
   def self.guest
     find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
