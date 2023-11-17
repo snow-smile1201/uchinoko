@@ -22,7 +22,7 @@
           </button>
           <div class="collapse navbar-collapse flex-column" id="navbarNavDropdown">
             <%if user_signed_in? %>
-              <%= render partial: "layouts/user_nav_list"%>
+              <%= render partial: "layouts/users_nav_list"%>
             <%elsif admin_signed_in? %>
               <%= render partial: "layouts/admin_nav_list"%>
             <% else %>

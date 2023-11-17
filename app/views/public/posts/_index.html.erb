@@ -4,16 +4,29 @@
     <div class="card w-100 h-100 d-flex mt-4 shadow-lg">
       <div class="row mt-4">
         <div class="col-11 mx-auto">
-          <p class="card-title px-5">
-            <%= link_to(post_path(post.id), class:"text-dark") do %>
-            <strong><i class="far fa-flag"></i><span><%= post.title %></span></strong>
+          <p class="card-title h5">
+            <%= link_to post_path(post.id), class: "text-reset" do %>
+              <strong><i class="fa-solid fa-child-reaching"></i>  <%= post.title %></span></strong>
             <% end %>
+            <div class="col text-right">
+              <span>
+                <%= post.created_at.strftime('%Y/%m/%d') %>
+                <%if post.user == current_user %>
+                  <%= link_to edit_post_path(post) do %>
+                    <i class="fa-regular fa-pen-to-square ml-3"></i>
+                  <% end %>
+                  <%= link_to post_path(post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
+                    <i class="fa-regular fa-trash-can text-danger ml-3"></i>
+                  <% end %>
+                <% end %>
+              </span>
+            </div>
           </p>
         </div>
       </div>
         <div class="card-body row flex-column mx-auto">
           <%= link_to post_path(post.id) do %>
-              <%= image_tag post.get_post_image(300, 300), class:"img-fluid img-thumbnail" %>
+              <%= image_tag post.get_post_image(300, 300), class:"card-img-top" %>
             <% end %>
           <p class="card-text mt-3">
             <% post.tags.each do |tag| %>
@@ -24,22 +37,27 @@
           </p>
         </div>
         <div class="card-footer">
-          <div class="row-10 d-flex">
-            <div class="col-4 justify-content-center">
-              <%= image_tag post.user.get_profile_image(55,55), class:"rounded-circle" %><br>
-              <%= link_to "#{post.user.name}", user_path(post.user.id),class:"text-dark" %>
-            </div>
-            <div class="col-8">
-              <p>
-                <i class="fa-solid fa-heart"></i>
-                <%= "#{post.favorites.count}" %>
-                <%= link_to post_path(post) do %>
-                  <i class="fa-regular fa-comment-dots"></i>
-                  <%= "#{post.post_comments.count}" %>
-                <% end %>
-              </p>
-            </div>
-          </div>
+          <table class="table table-sm table-borderless col-10 mx-auto">
+            <tbody>
+              <tr>
+                <td rowspan="2" class="text-center"><%= image_tag post.user.get_profile_image(60, 100), class: "rounded-circle" %></td>
+                <td>Posted by: <span class="text-secondary"><%= link_to "#{post.user.name}", user_path(post.user.id) %></span></td>
+              </tr>
+              <tr>
+                <td class="row">
+                  <div id="favorite_button_<%= post.id%>" class="col">
+                    <%= render 'public/favorites/favorite', post: post %>
+                  </div>
+                  <div class="col">
+                    <i class="fa-regular fa-comment-dots"></i><%= "#{post.post_comments.count}" %>コメント
+                  </div>
+                  <div class="col">
+                    <i class="fa-solid fa-tags"></i><%= post.genre.name %>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
     </div>
   </div>

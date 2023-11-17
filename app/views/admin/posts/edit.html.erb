@@ -1,19 +1,25 @@
 <div class="container">
   <div class="row">
     <h2><%= @post.child.name %>の成長記録</h2>
-    <%= form_with model: @post, url: admin_post_path(@post), method: :patch do |f| %>
-      <tr>
-        <th><%= f.label :is_banned, "禁止ステータス" %></th>
-        <td>
-          <%= f.radio_button :is_banned, true %>
-          <strong><%= f.label :is_banned_true, "公開停止"%></strong>
-          <%= f.radio_button :is_banned, false %>
-          <strong style="color: gray;"><%= f.label :is_banned_false, "公開"%></strong>
-        </td>
-        <td><%= f.submit '更新する',class:"btn btn-success" %></td>
-      </tr>
+  </div>
+  <div class="row">
+    <div class="status_form mx-auto">
+      <%= form_with model: @post, url: admin_post_path(@post), method: :patch do |f| %>
+        <tr>
+          <b><%= f.label :is_banned, "管理ステータス" %></b>
+          <td>
+            <%= f.radio_button :is_banned, false, class:"ml-3" %>
+            <strong><%= f.label :is_banned_false, "公開"%></strong>
+            <%= f.radio_button :is_banned, true, class:"ml-3" %>
+            <strong style="color: red;"><%= f.label :is_banned_true, "公開停止"%></strong>
+          </td>
+          <td><%= f.submit '変更',class:"btn btn-danger btn-sm ml-4", "data-confirm" => "本当に変更しますか？" %></td>
+        </tr>
       <% end %>
-    <div class="card w-75 mx-2 mt-4 mx-auto shadow-lg">
+    </div>
+  </div>
+  <div class="row">
+    <div class="card w-75 mt-4 mx-auto shadow-lg">
       <div class="row mx-auto mt-4">
         <div class="col-10 mx-auto">
             <p class="card-title">
@@ -46,12 +52,12 @@
         </div>
     </div>
   </div>
-</div>
-<div id="post_comments">
-  コメント数：<%= @post.post_comments.count %>
-  <%= render 'public/post_comments/show', post: @post %>
-</div>
-<div id="comment-form">
-  <!--%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>-->
-</div>
+  <div classs="row">
+    <div id="post_comments" class="col-md-6">
+      <%= render 'public/post_comments/show', post: @post %>
+    </div>
+  </div>
+  <div id="comment-form">
+    <!--%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>-->
+  </div>
 </div>

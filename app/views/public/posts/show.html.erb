@@ -1,18 +1,31 @@
-<div class="container">
+<div class="container my-5">
   <div class="row">
     <h2><%= @post.child.name %>の成長記録</h2>
     <% if @post.is_active == true %>
       <strong style="color: white; background-color: green;">公開中</strong>
     <% else %>
-      <strong style="color: white; background-color: gray;">公開停止中</strong>
+      <strong style="color: white; background-color: gray;">非公開</strong>
     <% end %>
     <div class="card w-75 mx-2 mt-4 mx-auto shadow-lg">
       <div class="row mx-auto mt-4">
         <div class="col-10 mx-auto">
-            <p class="card-title">
-              <strong><i class="far fa-flag"></i><span><%= @post.title %></span></strong>
+            <p class="card-title h5">
+              <strong><i class="fa-solid fa-child-reaching"></i>  <%= @post.title %></span></strong>
+              <div class="col text-right">
+                <span>
+                    <%= @post.created_at.strftime('%Y/%m/%d') %>
+                    <%if @post.user == current_user %>
+                      <%= link_to edit_post_path(@post) do %>
+                      <i class="fa-regular fa-pen-to-square ml-3"></i>
+                      <% end %>
+                      <%= link_to post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
+                      <i class="fa-regular fa-trash-can text-danger ml-3"></i>
+                      <% end %>
+                    <% end %>
+                  </span>
+              </div>
             </p>
-              <%= image_tag @post.get_post_image(1000, 1000), class:"card-img-top" %>
+            <%= image_tag @post.get_post_image(1000, 1000), class:"card-img-top" %>
           </div>
       </div>
         <div class="card-body row mx-auto p-5">
@@ -22,38 +35,37 @@
           </p>
         </div>
         <div class="card-footer">
-          <div class="row d-flex">
-            <div class="col-4 justify-content-center">
-              <%= link_to "#{@post.user.name}", user_path(@post.user.id),class:"text-dark" %>
-            </div>
-            <div class="col-8">
-              <p>
-                <div id="favorite_button_<%= @post.id%>">
-                  <%= render 'public/favorites/favorite', post: @post %>
-                </div>
-                <%= link_to post_path(@post) do %>
-                  <i class="fa-regular fa-comment-dots"></i>
-                  <%= "#{@post.post_comments.count}" %>
-                <% end %>
-                ジャンル：<%= @post.genre.name %>
-              </p>
-            </div>
-          </div>
+           <table class="table table-sm table-borderless col-10 mx-auto">
+            <tbody>
+              <tr>
+                <td rowspan="2" class="text-center"><%= image_tag @post.user.get_profile_image(60, 100), class: "rounded-circle" %></td>
+                <td>Posted by: <span class="text-secondary"><%= link_to "#{@post.user.name}", user_path(@post.user.id) %></span></td>
+              </tr>
+              <tr>
+                <td class="row">
+                  <div id="favorite_button_<%= @post.id%>" class="col">
+                    <%= render 'public/favorites/favorite', post: @post %>
+                  </div>
+                  <div class="col">
+                    <i class="fa-regular fa-comment-dots"></i><%= "#{@post.post_comments.count}" %>コメント
+                  </div>
+                  <div class="col">
+                    <i class="fa-solid fa-tags"></i><%= @post.genre.name %>
+                  </div>
+                  <div class="col">
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
     </div>
   </div>
-</div>
-<div>
-  <%if @post.user == current_user %>
-    <%= link_to '編集', edit_post_path(@post), class:"btn btn-success ml-3" %>
-    <%= link_to '削除', post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger ml-3" %>
-  <% end %>
-</div>
-<div id="post_comments">
-  コメント数：<%= @post.post_comments.count %>
-  <%= render 'public/post_comments/show', post: @post %>
-</div>
-<div id="comment-form">
-  <%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>
-</div>
+  <div classs="row">
+    <div id="post_comments" class="col-md-6">
+      <%= render 'public/post_comments/show', post: @post %>
+    </div>
+  <div id="comment-form" class="w-75 mx-auto">
+    <%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>
+  </div>
 </div>

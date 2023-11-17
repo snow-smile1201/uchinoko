@@ -2,7 +2,7 @@
     <tbody>
       <tr>
         <th><%= f.label :child_id, "うちのこ" %></th>
-        <td><%= f.collection_select :child_id, @user.children, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
+        <td><%= f.collection_select :child_id, user.children, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
       </tr>
       <tr>
         <th><%= f.label :post_image, "画像" %></th>
@@ -24,10 +24,10 @@
         <th><%= f.label :is_active, "公開ステータス" %></th>
         <td>
           <%= f.radio_button :is_active, true %>
-          <strong><%= f.label :is_active_true, "公開中"%></strong>
+          <strong><%= f.label :is_active_true, "公開"%></strong>
           <%= "　 　"%>
           <%= f.radio_button :is_active, false %>
-          <strong style="color: gray;"><%= f.label :is_active_false, "公開停止中"%></strong>
+          <strong style="color: gray;"><%= f.label :is_active_false, "非公開"%></strong>
         </td>
       </tr>
       <tr>

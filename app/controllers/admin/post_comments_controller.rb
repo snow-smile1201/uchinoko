@@ -7,7 +7,7 @@ class Admin::PostCommentsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
+    @post = Post.find(params[:post_id])
     comment = PostComment.find(params[:id])
     comment.update(is_banned: true)
     redirect_to edit_admin_post_path(@post)
