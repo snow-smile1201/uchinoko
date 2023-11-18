@@ -1,26 +1,18 @@
 class Favorite < ApplicationRecord
-  after_create_commit :inform_activities
   belongs_to :user
   belongs_to :post
-
   has_one :inform_activity, as: :subject, dependent: :destroy
 
   validates :user_id, presence: true
   validates :post_id, presence: true
   #1つの記事に対しいいねは1回まに制限のためのバリデーション
   validates :user_id, uniqueness: {scope: :post_id}
-  
-  def name
-    user.name
-  end
-  
+
+  after_create_commit :inform_activities
+
   private
 
     def inform_activities
-      InformActivity.create!(subject: self, user_id: self.post.user.id, action_type: InformActivity.action_types[ :favorited_the_post ])
-    end
-
-    def redirect_path
-      post_path(post)
+      InformActivity.create(subject: self, user: self.post.user, action_type: :favorited_the_post)
     end
 end

@@ -38,12 +38,15 @@
            <table class="table table-sm table-borderless col-10 mx-auto">
             <tbody>
               <tr>
-                <td rowspan="2" class="text-center"><%= image_tag @post.user.get_profile_image(60, 100), class: "rounded-circle" %></td>
-                <td>Posted by: <span class="text-secondary"><%= link_to "#{@post.user.name}", user_path(@post.user.id) %></span></td>
+                <td rowspan="3" class="text-center"><%= image_tag @post.user.get_profile_image(60, 100), class: "rounded-circle" %></td>
+                <td>Posted by: <strong><%= link_to "#{@post.user.name}", user_path(@post.user.id), class: "text-reset" %></strong></td>
+              </tr>
+              <tr>
+                <td>For: <strong><%= @post.child.name %></strong></td>
               </tr>
               <tr>
                 <td class="row">
-                  <div id="favorite_button_<%= @post.id%>" class="col">
+                  <div id="favorite_button_<%= @post.id %>" class="col">
                     <%= render 'public/favorites/favorite', post: @post %>
                   </div>
                   <div class="col">
@@ -51,8 +54,6 @@
                   </div>
                   <div class="col">
                     <i class="fa-solid fa-tags"></i><%= @post.genre.name %>
-                  </div>
-                  <div class="col">
                   </div>
                 </td>
               </tr>

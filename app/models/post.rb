@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :tag_relationships, dependent: :destroy
   has_many :tags, through: :tag_relationships
+  has_one :inform_activity, as: :subject, dependent: :destroy
   has_one_attached :post_image
   #引数にnを設定し、n日前の投稿数を取得
   scope :created_days_ago, -> (n) { where(created_at: n.days.ago.all_day) }
@@ -20,6 +21,10 @@ class Post < ApplicationRecord
       post_image.attach(io: File.open(file_path), filename: 'default-image.png', content_type: 'image/png')
     end
     post_image.variant(resize_to_limit: [width, height]).processed
+  end
+  #公開されている投稿のみをカウント
+  def self.count_active_posts
+    where(is_active: true, is_banned: false).count
   end
 
   def is_active?

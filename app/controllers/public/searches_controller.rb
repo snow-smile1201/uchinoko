@@ -8,4 +8,9 @@ class Public::SearchesController < ApplicationController
       @records = Post.search_for(@content).page(params[:page])
     end
   end
+  
+  def genre_search
+    @genre_id = params[:genre_id]
+    @posts = Post.where(genre_id: @genre_id)
+  end
 end

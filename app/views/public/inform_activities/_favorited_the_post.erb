@@ -1,0 +1,9 @@
+<%= link_to transition_path(activity) do %>
+  <div>
+    <%= link_to activity.subject.user.name, user_path(activity.subject.user) %>
+    があなたの
+    <%= link_to '投稿', post_path(activity.subject.post) %>
+    にいいねしました
+    <%= " (#{time_ago_in_words(activity.created_at)}前)" %>
+  </div>
+<% end %>

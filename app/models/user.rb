@@ -38,6 +38,15 @@ class User < ApplicationRecord
     self.is_active == true ? "有効" : "退会済"
   end
 
+  def is_banned?
+    self.is_banned == true ? "停止" : "有効"
+  end
+
+  #有効ユーザーのみをカウント
+  def self.count_active_users
+    where(is_active: true, is_banned: false).count
+  end
+
   def self.search_for(content)
     User.where("name LIKE?","%#{content}%")
   end

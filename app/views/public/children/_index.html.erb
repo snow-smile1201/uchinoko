@@ -1,13 +1,4 @@
-
 <table class="table">
-  <thead class="thead-light">
-    <tr>
-      <th>うちの子</th>
-      <th>誕生日</th>
-      <th>いいね</th>
-      <th>閲覧数</th>
-    </tr>
-  </thead>
   <tbody>
     <% children.each do |child| %>
       <tr>
@@ -16,15 +7,8 @@
           <span class="ml-1"><%= child.name %></span>
           <span class="ml-1"><%= "(#{child.posts.count})" %></span>
         </td>
-        <td><%= child.birthday %></td>
-        <td>
-          <% child.posts.each do |post| %>
-            <% @total_favorites = 0 %>
-            <% @total_favorites += post.favorites.count %>
-          <% end %>
-          <%= @total_favorites %>
-        </td>
-        <td>子供の記事の閲覧総数</td>
+        <td><i class="fa-solid fa-cake-candles"></i> <%= child.birthday.strftime('%m/%d') %></td>
+        <td><i class="fa-solid fa-heart" style="color: red;"></i> <%= child.total_favorites_count %></td>
         <td>
           <%= link_to edit_child_path(child) do %>
             <i class="fa-solid fa-pen-to-square"></i>

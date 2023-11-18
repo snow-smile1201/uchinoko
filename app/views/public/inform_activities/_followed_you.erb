@@ -1,0 +1,7 @@
+<%= link_to transition_path(activity) do %>
+  <div>
+    <%= link_to activity.subject.following.name, user_path(activity.subject.following) %>
+    があなたをフォローしました
+    <%= " (#{time_ago_in_words(activity.created_at)}前)" %>
+  </div>
+<% end %>

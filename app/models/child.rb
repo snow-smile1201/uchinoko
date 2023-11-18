@@ -3,6 +3,14 @@ class Child < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_one_attached :profile_image
 
+  def total_favorites_count
+    total_favorites = 0
+    self.posts.each do |post|
+      total_favorites += post.favorites.count
+    end
+    total_favorites
+  end
+
   def get_profile_image(width, height)
     unless profile_image.attached?
      file_path = Rails.root.join('app/assets/images/no_image.jpg')
