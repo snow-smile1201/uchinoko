@@ -6,9 +6,9 @@
     <% else %>
       <strong style="color: white; background-color: gray;">非公開</strong>
     <% end %>
-    <div class="card w-75 mx-2 mt-4 mx-auto shadow-lg">
+    <div class="card w-75 mt-4 mx-auto shadow-lg">
       <div class="row mx-auto mt-4">
-        <div class="col-10 mx-auto">
+        <div class="col-11 mx-auto">
             <p class="card-title h5">
               <strong><i class="fa-solid fa-child-reaching"></i>  <%= @post.title %></span></strong>
               <div class="col text-right">
@@ -28,45 +28,38 @@
             <%= image_tag @post.get_post_image(1000, 1000), class:"card-img-top" %>
           </div>
       </div>
-        <div class="card-body row mx-auto p-5">
+        <div class="card-body row px-5">
           <p class="card-text">
             <!--TODO：simple_formatなので改行は1行のみ反映。safe_joinはハッシュタグのリンクが解除される-->
             <%= simple_format(h(render_with_hashtags(@post.body))) %>
           </p>
         </div>
         <div class="card-footer">
-           <table class="table table-sm table-borderless col-10 mx-auto">
-            <tbody>
-              <tr>
-                <td rowspan="3" class="text-center"><%= image_tag @post.user.get_profile_image(60, 100), class: "rounded-circle" %></td>
-                <td>Posted by: <strong><%= link_to "#{@post.user.name}", user_path(@post.user.id), class: "text-reset" %></strong></td>
-              </tr>
-              <tr>
-                <td>For: <strong><%= @post.child.name %></strong></td>
-              </tr>
-              <tr>
-                <td class="row">
+          <div class="container">
+            <div class="row">
+              <div class="col-3 text-center"><%= image_tag @post.user.get_profile_image(80, 80), class: "rounded-circle" %></div>
+              <div class="col-9">
+                <div class="row">Posted by: <strong><%= link_to "#{@post.user.name}", user_path(@post.user.id), class: "text-reset" %></strong></div>
+                <div class="row mt-2">For: <strong><%= @post.child.name %></strong></div>
+                <div class="row mt-2">
                   <div id="favorite_button_<%= @post.id %>" class="col">
                     <%= render 'public/favorites/favorite', post: @post %>
                   </div>
-                  <div class="col">
-                    <i class="fa-regular fa-comment-dots"></i><%= "#{@post.post_comments.count}" %>コメント
-                  </div>
-                  <div class="col">
-                    <i class="fa-solid fa-tags"></i><%= @post.genre.name %>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <div class="col"><i class="fa-regular fa-comment-dots"></i><%= "#{@post.post_comments.count}" %>コメント</div>
+                  <div class="col"><i class="fa-solid fa-tags"></i><%= @post.genre.name %></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
   </div>
-  <div classs="row">
+  <div classs="row mt-3">
     <div id="post_comments" class="col-md-6">
       <%= render 'public/post_comments/show', post: @post %>
     </div>
-  <div id="comment-form" class="w-75 mx-auto">
-    <%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>
+    <div id="comment-form" class="col-md-6 w-100 mx-auto">
+      <%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>
+    </div>
   </div>
 </div>

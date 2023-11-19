@@ -3,16 +3,16 @@
     <%= link_to "mypage", user_path(current_user.id), class: 'nav-link text-dark' %>
   </li>
   <li class="nav-item">
-    <%= link_to "uchinoko", children_path, class: 'nav-link text-dark' %>
+    <%= link_to "users", users_path, class: 'nav-link text-dark' %>
   </li>
   <li class="nav-item">
-    <%= link_to "new posts", posts_path, class: 'nav-link text-dark' %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "logout", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
+    <%= link_to "posts", posts_path, class: 'nav-link text-dark' %>
   </li>
   <li class="nav-item">
     <%= link_to "tuuchi", inform_activities_path, class: 'nav-link text-dark' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "logout", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
   </li>
 </ul>
 <ul class="navbar-nav ml-auto">

@@ -1,5 +1,5 @@
-<div class="card-list-container py-5 d-flex">
-  <div class="col-md-2 mt-4 ml-3">
+<div class="card-list-container px-3 py-5 d-flex">
+  <div class="col-2">
     <table class="table table-sm">
       <thead class="thead-light">
         <tr>
@@ -17,7 +17,7 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-10 px-5">
+  <div class="col-10 px-2">
     <div class="row h-100">
       <% @posts.each do |post|%>
         <% unless post.is_banned == true || post.is_active == false %>
@@ -33,3 +33,4 @@
       <% end %>
     </div>
   </div>
+</div>

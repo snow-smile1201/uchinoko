@@ -79,6 +79,22 @@ class User < ApplicationRecord
     self.posts.update_all(is_banned: false)
   end
 
+  def total_favorites_count
+    total_favorites = 0
+    self.posts.each do |post|
+      total_favorites += post.favorites.count
+    end
+    total_favorites
+  end
+
+  def total_comments_count
+    total_comments = 0
+    self.posts.each do |post|
+      total_comments += post.post_comments.count
+    end
+    total_comments
+  end
+
   def banned_posts_count
     self.posts.where(is_banned: true).count
   end

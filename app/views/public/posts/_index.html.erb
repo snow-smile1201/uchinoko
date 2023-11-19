@@ -1,7 +1,7 @@
 <!--TODO:カードの高さを揃える,イメージの大きさはcssでobject-fit containすることを検討-->
 <div class="container">
   <div class="row">
-    <div class="card w-100 h-100 d-flex mt-4 shadow-lg">
+    <div class="card w-100 h-100 d-flex shadow-lg">
       <div class="row mt-4">
         <div class="col-11 mx-auto">
           <p class="card-title h5">
@@ -37,30 +37,22 @@
           </p>
         </div>
         <div class="card-footer">
-          <table class="table table-sm table-borderless col-10 mx-auto">
-            <tbody>
-              <tr>
-                <td rowspan="3" class="text-center"><%= image_tag post.user.get_profile_image(60, 100), class: "rounded-circle" %></td>
-                <td>Posted by: <strong><%= link_to "#{post.user.name}", user_path(post.user.id), class: "text-reset" %></strong></td>
-              </tr>
-              <tr>
-                <td>For: <strong><%= post.child.name %></strong></td>
-              </tr>
-              <tr>
-                <td class="row">
-                  <div id="favorite_button_<%= post.id%>" class="col">
+          <div class="container">
+            <div class="row">
+              <div class="col-3 text-center"><%= image_tag post.user.get_profile_image(80, 80), class: "rounded-circle" %></div>
+              <div class="col-9">
+                <div class="row">Posted by: <strong><%= link_to "#{post.user.name}", user_path(post.user.id), class: "text-reset" %></strong></div>
+                <div class="row mt-2">For: <strong><%= post.child.name %></strong></div>
+                <div class="row mt-2">
+                  <div id="favorite_button_<%= post.id %>" class="col">
                     <%= render 'public/favorites/favorite', post: post %>
                   </div>
-                  <div class="col">
-                    <i class="fa-regular fa-comment-dots"></i><%= "#{post.post_comments.count}" %>コメント
-                  </div>
-                  <div class="col">
-                    <i class="fa-solid fa-tags"></i><%= post.genre.name %>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <div class="col"><i class="fa-regular fa-comment-dots"></i><%= "#{post.post_comments.count}" %></div>
+                  <div class="col"><i class="fa-solid fa-tags"></i><%= post.genre.name %></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
   </div>

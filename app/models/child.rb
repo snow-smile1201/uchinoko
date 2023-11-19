@@ -10,6 +10,14 @@ class Child < ApplicationRecord
     end
     total_favorites
   end
+  
+  def total_comments_count
+    total_comments = 0
+    self.posts.each do |post|
+      total_comments += post.post_comments.count
+    end
+    total_comments
+  end
 
   def get_profile_image(width, height)
     unless profile_image.attached?
