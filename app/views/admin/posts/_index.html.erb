@@ -27,7 +27,7 @@
             <td><%= post.favorites.count %></td>
             <td><%= post.post_comments.count %></td>
             <td><%= post.is_active? %></td>
-            <td><%= post.is_banned? %></td>
+            <td><strong><%= post.is_banned? %></strong></td>
           </tr>
         <% end %>
       <% end %>

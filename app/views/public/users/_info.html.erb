@@ -16,7 +16,11 @@
   <div class="row mt-2">
     <div class="col border rounded p-3">
       <% if user.policy.present? %>
-        <strong><%= safe_join(user.policy.split("\n"),tag(:br)) %></strong>
+        <%= safe_join(user.policy.split("\n"),tag(:br)) %>
+      <% else %>
+        <% if user == current_user %>
+         <p><%= link_to '編集',edit_user_path(user) %>ページから編集してください。<br>※ゲストユーザーは編集できません。</p>
+        <% end %>
       <% end %>
     </div>
   </div>

@@ -1,11 +1,6 @@
 <div class="container my-5">
   <div class="row">
     <h2><%= @post.child.name %>の成長記録</h2>
-    <% if @post.is_active == true %>
-      <strong style="color: white; background-color: green;">公開中</strong>
-    <% else %>
-      <strong style="color: white; background-color: gray;">非公開</strong>
-    <% end %>
     <div class="card w-75 mt-4 mx-auto shadow-lg">
       <div class="row mx-auto mt-4">
         <div class="col-11 mx-auto">
@@ -13,13 +8,18 @@
               <strong><i class="fa-solid fa-child-reaching"></i>  <%= @post.title %></span></strong>
               <div class="col text-right">
                 <span>
-                    <%= @post.created_at.strftime('%Y/%m/%d') %>
-                    <%if @post.user == current_user %>
-                      <%= link_to edit_post_path(@post) do %>
+                  <%= @post.created_at.strftime('%Y/%m/%d') %>
+                  <%if @post.user == current_user %>
+                    <%= link_to edit_post_path(@post) do %>
                       <i class="fa-regular fa-pen-to-square ml-3"></i>
-                      <% end %>
-                      <%= link_to post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
+                    <% end %>
+                    <%= link_to post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
                       <i class="fa-regular fa-trash-can text-danger ml-3"></i>
+                    <% end %>
+                      <% if @post.is_active == true %>
+                        <strong class="border rounded p-1" style="color: white; background-color: green;">公開中</strong>
+                      <% else %>
+                        <strong class="border rounded p-1" style="color: white; background-color: gray;">非公開</strong>
                       <% end %>
                     <% end %>
                   </span>

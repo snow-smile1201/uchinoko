@@ -1,63 +1,59 @@
 <div class="container">
-  <div class="row">
-    <h2><%= @post.child.name %>の成長記録</h2>
-  </div>
-  <div class="row">
-    <div class="status_form mx-auto">
-      <%= form_with model: @post, url: admin_post_path(@post), method: :patch do |f| %>
-        <tr>
-          <b><%= f.label :is_banned, "管理ステータス" %></b>
-          <td>
-            <%= f.radio_button :is_banned, false, class:"ml-3" %>
-            <strong><%= f.label :is_banned_false, "公開"%></strong>
-            <%= f.radio_button :is_banned, true, class:"ml-3" %>
-            <strong style="color: red;"><%= f.label :is_banned_true, "公開停止"%></strong>
-          </td>
-          <td><%= f.submit '変更',class:"btn btn-danger btn-sm ml-4", "data-confirm" => "本当に変更しますか？" %></td>
-        </tr>
-      <% end %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="card w-75 mt-4 mx-auto shadow-lg">
-      <div class="row mx-auto mt-4">
-        <div class="col-10 mx-auto">
-            <p class="card-title">
-              <strong><i class="far fa-flag"></i><span><%= @post.title %></span></strong>
-            </p>
-              <%= image_tag @post.get_post_image(1000, 1000), class:"card-img-top" %>
-          </div>
+  <div class="row my-4">
+    <div class="col-6">
+      <div class="status_form mx-auto">
+        <%= form_with model: @post, url: admin_post_path(@post), method: :patch do |f| %>
+          <tr>
+            <b><%= f.label :is_banned, "管理ステータス" %></b>
+            <td>
+              <%= f.radio_button :is_banned, false, class:"ml-3" %>
+              <strong><%= f.label :is_banned_false, "公開"%></strong>
+              <%= f.radio_button :is_banned, true, class:"ml-3" %>
+              <strong style="color: red;"><%= f.label :is_banned_true, "公開停止"%></strong>
+            </td>
+            <td><%= f.submit '変更',class:"btn btn-danger btn-sm ml-4", "data-confirm" => "本当に変更しますか？" %></td>
+          </tr>
+        <% end %>
       </div>
-        <div class="card-body row mx-auto p-5">
-          <p class="card-text">
-            <!--TODO：simple_formatなので改行は1行のみ反映。safe_joinはハッシュタグのリンクが解除される-->
-            <%= simple_format(h(render_with_hashtags(@post.body))) %>
-          </p>
-        </div>
-        <div class="card-footer">
-          <div class="row d-flex">
-            <div class="col-4 justify-content-center">
-              <%= link_to "#{@post.user.name}", user_path(@post.user.id),class:"text-dark" %>
-            </div>
-            <div class="col-8">
-              <p>
-                <%= link_to post_path(@post) do %>
-                  <i class="fa-regular fa-comment-dots"></i>
-                  <%= "#{@post.post_comments.count}" %>
-                <% end %>
-                ジャンル：<%= @post.genre.name %>
+      <div class="row">
+        <div class="card w-100 mt-4 mx-auto shadow-lg">
+          <div class="row mt-4">
+            <div class="col-11 mx-auto">
+                <p class="card-title">
+                  <strong><i class="far fa-flag"></i><span><%= @post.title %></span></strong>
+                </p>
+                  <%= image_tag @post.get_post_image(500, 500), class:"card-img-top" %>
+              </div>
+          </div>
+            <div class="card-body row mx-auto p-5">
+              <p class="card-text">
+                <!--TODO：simple_formatなので改行は1行のみ反映。safe_joinはハッシュタグのリンクが解除される-->
+                <%= simple_format(h(render_with_hashtags(@post.body))) %>
               </p>
             </div>
-          </div>
+            <div class="card-footer">
+              <div class="row d-flex">
+                <div class="col-4 justify-content-center">
+                  <%= link_to "#{@post.user.name}", user_path(@post.user.id),class:"text-dark" %>
+                </div>
+                <div class="col-8">
+                  <p>
+                    <i class="fa-regular fa-comment-dots"></i>
+                      <%= "#{@post.post_comments.count}" %>
+                    ジャンル：<%= @post.genre.name %>
+                  </p>
+                </div>
+              </div>
+            </div>
         </div>
+      </div>
     </div>
-  </div>
-  <div classs="row">
-    <div id="post_comments" class="col-md-6">
+    <div id="post_comments" class="col-6">
       <%= render 'public/post_comments/show', post: @post %>
+      <div id="comment-form">
+        <!--%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>-->
+      </div>
     </div>
-  </div>
-  <div id="comment-form">
-    <!--%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>-->
   </div>
 </div>
+

@@ -1,22 +1,20 @@
 <div class="container px-sm-0 px-5" >
   <% if @range == "User" %>
     <div class="row my-4">
-      <h3>ユーザー検索結果(<%= @records.count_active_users %>件)</h3>
+      <h3>ユーザー検索結果(<%= @records.count %>件)</h3>
     </div>
     <div class="row">
       <%= render 'public/users/index', users: @records%>
     </div>
   <% else %>
     <div class="row my-4">
-      <h3>投稿検索結果(<%= @records.count_active_posts %>件)</h3>
+      <h3>投稿検索結果(<%= @records.count %>件)</h3>
     </div>
     <div class="row h-100">
       <% @records.each do |post|%>
-        <% unless post.is_banned == true || post.is_active == false %>
         <div class="col-sm-12 col-md-6">
           <%= render partial: 'public/posts/index', locals:{ post: post } %>
         </div>
-        <% end %>
       <% end %>
     </div>
   <% end %>

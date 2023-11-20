@@ -1,5 +1,5 @@
 <% if @activities.present? %>
-  <%= link_to "通知のクリア", inform_activities_path, method: :delete, class:"btn btn-light"%>
+  <%= link_to "通知のクリア", destroy_all_inform_activities_path, method: :delete, class:"btn btn-light"%>
   <% @activities.each do |activity| %>
     <%= render "#{activity.action_type}", activity: activity %>
   <% end %>

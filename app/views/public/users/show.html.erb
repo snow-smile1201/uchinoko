@@ -30,19 +30,19 @@
           </div>
           <div class="card-footer">
             <div class="row btn-wrapper justify-content-center">
-              <% unless @user.children == nil %>
-                <div class="col-4">
-                  <%= link_to new_post_path, class: "btn btn-sm btn-block btn-success" do %>
-                    + new <i class="fa-solid fa-file-signature"></i>
-                  <% end %>
-                </div>
-              <% end %>
               <% if current_user == @user %>
                 <div class="col-4">
                   <%= link_to children_path, class: "btn btn-sm btn-block btn-info" do %>
                     + new <i class="fa-solid fa-child-reaching"></i>
                   <% end %>
                 </div>
+                  <% unless @user.children.empty? %>
+                    <div class="col-4">
+                      <%= link_to new_post_path, class: "btn btn-sm btn-block btn-success" do %>
+                        + new <i class="fa-solid fa-file-signature"></i>
+                      <% end %>
+                    </div>
+                  <% end %>
               <% else %>
                 <div class="col-4"><%= render "public/user_relationships/btn", user: @user %></div>
               <% end %>
@@ -51,22 +51,31 @@
       </div>
     </div>
     <div class="col-md-6 mx-auto">
-      <table class="table">
+      <table class="table table-sm table-borderless">
         <tbody>
-          <% @user.posts.each do |post| %>
+          <% if @posts.empty? %>
             <tr>
-              <td>
-                <%= link_to post_path(post.id) do %>
-                  <i class="fa-solid fa-child-reaching"></i> <%= post.title %>
-                <% end %>
-              </td>
-              <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
-              <td><i class="fa-solid fa-heart" style="color: red;"></i> <%= post.favorites.count %></td>
-              <td><i class="fa-regular fa-comment-dots"></i> <%= post.post_comments.count %></td>
-              <td><i class="fa-solid fa-key"></i> <%= post.is_active? %></td>
+              <td>投稿はありません。</td>
             </tr>
+          <% else %>
+            <% @posts.each do |post| %>
+              <tr>
+                <td>
+                  <%= link_to post_path(post.id) do %>
+                    <i class="fa-solid fa-child-reaching"></i> <span class="d-inline-block text-truncate" style="max-width: 300px;"><%= post.title %></span>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
+                <td><i class="fa-solid fa-heart" style="color: red;"></i> <%= post.favorites.count %></td>
+                <td><i class="fa-regular fa-comment-dots"></i> <%= post.post_comments.count %></td>
+                <td><i class="fa-solid fa-key"></i> <%= post.is_active? %></td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
     </div>
   </div>
+</div>

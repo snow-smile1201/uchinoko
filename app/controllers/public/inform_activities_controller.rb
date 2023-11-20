@@ -6,7 +6,7 @@ class Public::InformActivitiesController < ApplicationController
     end
   end
 
-  def destroy
+  def destroy_all
     @activities = current_user.inform_activities.destroy_all
     redirect_to inform_activities_path
   end

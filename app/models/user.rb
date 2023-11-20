@@ -16,9 +16,11 @@ class User < ApplicationRecord
   has_many :followers, class_name: "UserRelationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following_users, through: :followings, source: :follower
   has_many :follower_users, through: :followers, source: :following
+  scope :active, -> {where(is_active: true, is_banned: false)}
+  scope :inactive, ->  {where(is_active: false, is_banned: true)}
   #引数にnを設定し、n日前の投稿数を取得
   scope :created_days_ago, -> (n) { where(created_at: n.days.ago.all_day) }
-  #n日間の投稿数を取得、一週間前のデータから配列に格納
+  #7日間の投稿数を取得、一週間前のデータから配列に格納
   def self.past_week_count
     (0..6).map { |n| created_days_ago(n).count }.reverse
   end
@@ -42,11 +44,6 @@ class User < ApplicationRecord
     self.is_banned == true ? "停止" : "有効"
   end
 
-  #有効ユーザーのみをカウント
-  def self.count_active_users
-    where(is_active: true, is_banned: false).count
-  end
-
   def self.search_for(content)
     User.where("name LIKE?","%#{content}%")
   end
@@ -60,7 +57,7 @@ class User < ApplicationRecord
   end
 
   def follow(user_id)
-    followings.create(follower_id: user_id)
+    followings.find_or_create_by(follower_id: user_id)
   end
 
   def unfollow(user_id)
@@ -78,7 +75,7 @@ class User < ApplicationRecord
   def publish_posts
     self.posts.update_all(is_banned: false)
   end
-
+  #TODO:N+1問題
   def total_favorites_count
     total_favorites = 0
     self.posts.each do |post|
@@ -86,7 +83,7 @@ class User < ApplicationRecord
     end
     total_favorites
   end
-
+  #TODO:N+1問題
   def total_comments_count
     total_comments = 0
     self.posts.each do |post|

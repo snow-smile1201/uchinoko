@@ -9,7 +9,7 @@
         <table class="table table-borderless">
           <tbody>
             <tr>
-              <td><%= f.file_field :profile_image, accept: "image/jpeg" %></td>
+              <td><%= f.label :profile_image, "画像：" %><%= f.file_field :profile_image, accept: "image/jpeg" %></td>
             </tr>
             <tr>
               <td><%= f.label :name, "名前 (ニックネーム)" %>
@@ -19,7 +19,7 @@
             </tr>
             <tr>
               <td>
-                <%= f.label :policy, "うちの方針" %>
+                <%= f.label :policy, "My policy" %>
                 <%= f.text_area :policy, rows: 7, placeholder: "子育ての基本方針、ルール、気をつけていることなどを記入してください。", class: "form-control" %>
               </td>
             </tr>

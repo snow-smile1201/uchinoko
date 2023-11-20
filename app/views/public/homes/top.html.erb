@@ -1,7 +1,17 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
-<div class="btn-wrapper col-10 mx-auto">
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-7  mx-auto">
+      <h1>welcome to <strong>Uch</strong><i class="fa-solid fa-child-reaching"></i><strong>noco</strong></h1>
+      <p>In <strong>Uch</strong><i class="fa-solid fa-child-reaching"></i><strong>noco</strong>,</p>
+      <p>you can share and exchange your opinions, inpressions, and emotions</p>
+      <p>about your education!</p>
+    </div>
+  </div>
   <div class="row">
-    <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+    <div class="col-6  mx-auto">
+      <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-success btn-sm btn-block mb-3" %>
+      <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary btn-sm btn-block mb-3" %>
+    </div>
   </div>
 </div>

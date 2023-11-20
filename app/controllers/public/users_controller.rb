@@ -1,7 +1,8 @@
 class Public::UsersController < ApplicationController
   def index
-    @user = current_user
-    @users = User.all
+    #フォロワーの多い順にユーザー一覧を表示
+    users = User.active.includes(:followers).all
+    @users = users.sort_by { |user| -user.followers.count }
   end
 
   def show
@@ -9,6 +10,11 @@ class Public::UsersController < ApplicationController
     @children = @user.children
     @following_users = @user.following_users
     @follower_users = @user.follower_users
+    if @user == current_user
+      @posts = @user.posts
+    else
+      @posts = @user.posts.published
+    end
   end
 
   def edit
@@ -18,7 +24,7 @@ class Public::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to users_path
+      redirect_to user_path(@user)
     else
       render :edit
     end
@@ -28,6 +34,7 @@ class Public::UsersController < ApplicationController
     user = User.find(params[:id])
     @users = user.following_users
   end
+
   def followers
     user = User.find(params[:id])
     @users = user.follower_users

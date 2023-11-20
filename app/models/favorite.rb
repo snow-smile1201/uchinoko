@@ -13,6 +13,6 @@ class Favorite < ApplicationRecord
   private
 
     def inform_activities
-      InformActivity.create(subject: self, user: self.post.user, action_type: :favorited_the_post)
+      InformActivity.create(subject: self, user_id: self.post.user.id, action_type: :favorited_the_post)
     end
 end

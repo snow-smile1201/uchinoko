@@ -25,7 +25,6 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root to: 'homes#top'
-    get 'homes/about' => 'homes#about'
     get 'users/confirm_withdraw' => 'users#confirm_withdraw', as: 'confirm_withdraw'
     patch 'users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
     get '/post/hashtag/:name' => 'posts#hashtag', as: 'hashtag'
@@ -43,7 +42,11 @@ Rails.application.routes.draw do
       resources :post_comments, only: [:create, :destroy]
       resource :favorites, only: [:create, :destroy]
     end
-    resources :inform_activities, only: [:index]
+    resources :inform_activities, only: [:index] do
+      collection do
+        delete :destroy_all
+      end
+    end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

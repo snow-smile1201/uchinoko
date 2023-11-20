@@ -1,9 +1,9 @@
 class Public::PostsController < ApplicationController
   def index
     @genres = Genre.all
-    #ユーザーとフォローしているユーザーの投稿を取得
-    following_users_ids = current_user.following_ids
-    posts = Post.where(user_id: [current_user.id, *following_users_ids])
+    #公開ステータスが有効、かつユーザーとフォローしているユーザーの投稿を取得
+    following_users_ids = current_user.following_users.pluck(:id)
+    posts = Post.published.where(user_id: [current_user.id, *following_users_ids])
     @posts = posts.sort_by(&:created_at).reverse
   end
 
@@ -25,6 +25,9 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @post_comment = PostComment.new
+    if @post.is_published? == false && @post.user != current_user
+      redirect_to posts_path, notice: 'このページにはアクセスできません'
+    end
   end
 
   def edit

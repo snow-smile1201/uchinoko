@@ -9,7 +9,7 @@ class Public::ChildrenController < ApplicationController
     @child.user_id = current_user.id
     @children = current_user.children
     if @child.save
-      redirect_to children_path
+      redirect_to user_path(@child.user)
     else
       render :index
     end
@@ -22,7 +22,7 @@ class Public::ChildrenController < ApplicationController
   def update
     @child = Child.find(params[:id])
     if @child.update(child_params)
-      redirect_to children_path
+      redirect_to user_path(@child.user)
     else
       render :edit
     end
@@ -30,6 +30,6 @@ class Public::ChildrenController < ApplicationController
 
    private
   def child_params
-    params.require(:child).permit(:name, :birthday, :profile_image)
+    params.require(:child).permit(:name, :birthday, :profile_image, :user_id)
   end
 end

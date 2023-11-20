@@ -31,7 +31,7 @@
           <p class="card-text mt-3">
             <% post.tags.each do |tag| %>
               <%= link_to hashtag_path(tag.hashname) do %>
-                #<%= tag.hashname %>
+                <span class="d-inline-block text-truncate" style="max-width: 100px;">#<%= tag.hashname %></span>
               <% end %>
             <% end %>
           </p>
