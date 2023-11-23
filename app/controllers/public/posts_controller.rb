@@ -1,10 +1,11 @@
 class Public::PostsController < ApplicationController
   def index
+    @user = current_user
     @genres = Genre.all
     #公開ステータスが有効、かつユーザーとフォローしているユーザーの投稿を取得
     following_users_ids = current_user.following_users.pluck(:id)
     posts = Post.published.where(user_id: [current_user.id, *following_users_ids])
-    @posts = posts.sort_by(&:created_at).reverse
+    @posts = posts.order(created_at: :desc).page(params[:page]).per(6)
   end
 
   def new

@@ -18,8 +18,10 @@
       <% if user.policy.present? %>
         <%= safe_join(user.policy.split("\n"),tag(:br)) %>
       <% else %>
-        <% if user == current_user %>
-         <p><%= link_to '編集',edit_user_path(user) %>ページから編集してください。<br>※ゲストユーザーは編集できません。</p>
+        <% if user.guest_user? %>
+          <p>ゲストユーザーはプロフィールを編集できません。</p>
+        <% elsif user == current_user %>
+          <p>プロフィール右上の編集ボタン、もしくは<%= link_to 'こちら',edit_user_path(user) %>から編集してください。</p>
         <% end %>
       <% end %>
     </div>

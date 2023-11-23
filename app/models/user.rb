@@ -43,9 +43,9 @@ class User < ApplicationRecord
   def is_banned?
     self.is_banned == true ? "停止" : "有効"
   end
-
+  #退会・停止ユーザーは検索結果に含めない
   def self.search_for(content)
-    User.where("name LIKE?","%#{content}%")
+    User.active.where("name LIKE?","%#{content}%")
   end
 
   def get_profile_image(width, height)

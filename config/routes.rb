@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root to: 'homes#top'
+    get 'users/:id/my_favorites' => 'users#my_favorites', as: 'my_favorites'
     get 'users/confirm_withdraw' => 'users#confirm_withdraw', as: 'confirm_withdraw'
     patch 'users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
     get '/post/hashtag/:name' => 'posts#hashtag', as: 'hashtag'

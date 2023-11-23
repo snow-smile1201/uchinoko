@@ -1,4 +1,5 @@
 <!--TODO:カードの高さを揃える,イメージの大きさはcssでobject-fit containすることを検討-->
+<!--todo:無限スクロール追加実装予定-->
 <div class="container">
   <div class="row">
     <div class="card w-100 h-100 d-flex shadow-lg">
@@ -26,7 +27,7 @@
       </div>
         <div class="card-body row flex-column mx-auto">
           <%= link_to post_path(post.id) do %>
-              <%= image_tag post.get_post_image(300, 300), class:"card-img-top" %>
+              <%= image_tag post.get_post_image(300, 300) %>
             <% end %>
           <p class="card-text mt-3">
             <% post.tags.each do |tag| %>
@@ -44,11 +45,11 @@
                 <div class="row">Posted by: <strong><%= link_to "#{post.user.name}", user_path(post.user.id), class: "text-reset" %></strong></div>
                 <div class="row mt-2">For: <strong><%= post.child.name %></strong></div>
                 <div class="row mt-2">
-                  <div id="favorite_button_<%= post.id %>" class="col">
+                  <div id="favorite_button_<%= post.id %>" class="col-3">
                     <%= render 'public/favorites/favorite', post: post %>
                   </div>
-                  <div class="col"><i class="fa-regular fa-comment-dots"></i><%= "#{post.post_comments.count}" %></div>
-                  <div class="col"><i class="fa-solid fa-tags"></i><%= post.genre.name %></div>
+                  <div class="col-3"><i class="fa-regular fa-comment-dots"></i><%= "#{post.post_comments.count}" %></div>
+                  <div class="col-5"><i class="fa-solid fa-tags"></i><%= post.genre.name %></div>
                 </div>
               </div>
             </div>

@@ -1,34 +1,46 @@
-<div class="card-list-container px-3 py-5 d-flex">
-  <div class="col-2">
-    <table class="table table-sm">
-      <thead class="thead-light">
-        <tr>
-          <th>ジャンル</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @genres.each do |genre| %>
-          <tr>
-            <td><%= link_to genre.name, genre_search_path(genre_id: genre.id), class:"text-reset" %></td>
-            <td><%= genre.posts.published.count %></td>
-          </tr>
-        <%end%>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-10 px-2">
-    <div class="row h-100">
-      <% @posts.each do |post|%>
-        <div class="col-sm-12 col-md-6">
-          <%= render partial: 'index', locals:{ post: post } %>
-        </div>
+<div class="container">
+  <div class="row">
+    <% unless @user.children.empty? %>
+    <div class="col d-flex my-3 justify-content-end">
+      <%= link_to new_post_path, class: "col-2 btn btn-sm btn-block btn-success" do %>
+        + new <i class="fa-solid fa-file-signature"></i>
       <% end %>
     </div>
-    <div class="row mx-auto">
-      <%= link_to new_post_path do %>
-        <button type="button" class="btn btn-light rounded-circle p-0 shadow-sm" style="width:2rem;height:2rem;"><strong>＋</strong></button>
-      <% end %>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card-list-container py-3 d-flex">
+        <div class="col-2">
+          <table class="table table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th>ジャンル</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @genres.each do |genre| %>
+                <tr>
+                  <td><%= link_to genre.name, genre_search_path(genre_id: genre.id), class:"text-reset" %></td>
+                  <td><%= genre.posts.published.count %></td>
+                </tr>
+              <%end%>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-10 px-2">
+          <div class="row">
+            <% @posts.each do |post|%>
+              <div class="col-sm-12 col-md-6 mb-3">
+                <%= render partial: 'index', locals:{ post: post } %>
+              </div>
+            <% end %>
+            <%= paginate @posts %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+

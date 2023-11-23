@@ -1,3 +1,5 @@
+<!--todo:無限スクロール追加実装予定-->
+<div class="scroll-list jscroll">
   <table class="table">
     <thead>
       <tr>
@@ -11,7 +13,6 @@
     </thead>
     <tbody>
       <% users.each do |user| %>
-        <% unless user.is_banned == true || user.is_active == false %>
           <tr>
             <td>
               <%= image_tag user.get_profile_image(50, 50) %>
@@ -22,7 +23,7 @@
             <td class="text-center"><%= user.followers.count %></td>
             <td> <%= render "public/user_relationships/btn", user: user, options: { class: "follow-link"} %></td>
           </tr>
-        <% end %>
       <% end %>
     </tbody>
   </table>
+</div>

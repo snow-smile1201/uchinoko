@@ -1,19 +1,23 @@
 class Public::UsersController < ApplicationController
+before_action :ensure_guest_user, only: [:edit]
+
   def index
     #フォロワーの多い順にユーザー一覧を表示
     users = User.active.includes(:followers).all
-    @users = users.sort_by { |user| -user.followers.count }
+    sorted_users = users.sort_by { |user| -user.followers.count }
+    @users = Kaminari.paginate_array(sorted_users).page(params[:page]).per(5)
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.active.find(params[:id])
     @children = @user.children
     @following_users = @user.following_users
     @follower_users = @user.follower_users
+    #ユーザー本人には全ての投稿を表示、それ以外のユーザーには公開ステータスの投稿のみ表示
     if @user == current_user
-      @posts = @user.posts
+      @posts = @user.posts.order(created_at: :desc).page(params[:page]).per(10)
     else
-      @posts = @user.posts.published
+      @posts = @user.posts.published.order(created_at: :desc).page(params[:page]).per(10)
     end
   end
 
@@ -40,6 +44,11 @@ class Public::UsersController < ApplicationController
     @users = user.follower_users
   end
 
+  def my_favorites
+    favorite_posts_ids = Favorite.where(user_id: current_user.id).pluck(:post_id)
+    @posts = Post.published.where(id: favorite_posts_ids).page(params[:page]).per(10)
+  end
+
   def withdraw
     @user = User.find(params[:id])
     @user.update(is_active: false)
@@ -56,6 +65,7 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:email, :name, :policy, :is_active, :profile_image)
   end
 
+  #ゲストユーザーのプロフィール編集防止
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.guest_user?
