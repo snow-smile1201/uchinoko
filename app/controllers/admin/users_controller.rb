@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   def index
-    @users = User.all
+    @users = User.includes(:posts, :post_comments)
   end
 
   def edit

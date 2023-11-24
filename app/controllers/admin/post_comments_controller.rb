@@ -6,11 +6,12 @@ class Admin::PostCommentsController < ApplicationController
     comment.save
   end
 
+　#コメント禁止用
   def update
     @post = Post.find(params[:post_id])
     comment = PostComment.find(params[:id])
     comment.update(is_banned: true)
-    redirect_to edit_admin_post_path(@post)
+    redirect_to edit_admin_post_path(@post), alert: "コメントを非表示にしました"
   end
 
   def destroy

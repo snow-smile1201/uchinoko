@@ -1,14 +1,12 @@
 <div class="container px-sm-0 px-5" >
   <div class="row my-4">
-    <h3>投稿検索結果(<%= @posts.count %>件)</h3>
+    <h4>ジャンル：<%= Genre.find(@genre_id).name %>の投稿(<%= @posts.count %>件)</h34>
   </div>
   <div class="row h-100">
     <% @posts.each do |post|%>
-      <% unless post.is_banned == true || post.is_active == false %>
       <div class="col-sm-12 col-md-6">
         <%= render partial: 'public/posts/index', locals:{ post: post } %>
       </div>
-      <% end %>
     <% end %>
   </div>
 </div>

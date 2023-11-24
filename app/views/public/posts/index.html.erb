@@ -1,7 +1,12 @@
 <div class="container">
+  <div class="row m-2">
+    <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %> mx-auto"><%= message %></div>
+    <% end %>
+  </div>
   <div class="row">
     <% unless @user.children.empty? %>
-    <div class="col d-flex my-3 justify-content-end">
+    <div class="col d-flex justify-content-end">
       <%= link_to new_post_path, class: "col-2 btn btn-sm btn-block btn-success" do %>
         + new <i class="fa-solid fa-file-signature"></i>
       <% end %>

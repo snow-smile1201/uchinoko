@@ -27,7 +27,7 @@
       </div>
         <div class="card-body row flex-column mx-auto">
           <%= link_to post_path(post.id) do %>
-              <%= image_tag post.get_post_image(300, 300) %>
+              <%= image_tag post.get_post_image(300, 300), class:"card-img-top" %>
             <% end %>
           <p class="card-text mt-3">
             <% post.tags.each do |tag| %>
@@ -40,7 +40,7 @@
         <div class="card-footer">
           <div class="container">
             <div class="row">
-              <div class="col-3 text-center"><%= image_tag post.user.get_profile_image(80, 80), class: "rounded-circle" %></div>
+              <div class="col-3 text-center"><%= image_tag post.user.get_profile_image(80, 80), class: "img-fluid rounded-circle" %></div>
               <div class="col-9">
                 <div class="row">Posted by: <strong><%= link_to "#{post.user.name}", user_path(post.user.id), class: "text-reset" %></strong></div>
                 <div class="row mt-2">For: <strong><%= post.child.name %></strong></div>

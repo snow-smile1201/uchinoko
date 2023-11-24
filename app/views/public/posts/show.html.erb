@@ -1,7 +1,11 @@
 <div class="container my-5">
+  <div class="row m-2">
+    <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %> mx-auto"><%= message %></div>
+    <% end %>
+  </div>
   <div class="row">
-    <h2><%= @post.child.name %>の成長記録</h2>
-    <div class="card w-75 mt-4 mx-auto shadow-lg">
+    <div class="card w-75 mx-auto shadow-lg">
       <div class="row mx-auto mt-4">
         <div class="col-11 mx-auto">
             <p class="card-title h5">
@@ -37,7 +41,7 @@
         <div class="card-footer">
           <div class="container">
             <div class="row">
-              <div class="col-3 text-center"><%= image_tag @post.user.get_profile_image(80, 80), class: "rounded-circle" %></div>
+              <div class="col-3 text-center"><%= image_tag @post.user.get_profile_image(80, 80), class: "img-fluid rounded-circle" %></div>
               <div class="col-9">
                 <div class="row">Posted by: <strong><%= link_to "#{@post.user.name}", user_path(@post.user.id), class: "text-reset" %></strong></div>
                 <div class="row mt-2">For: <strong><%= @post.child.name %></strong></div>
@@ -55,10 +59,10 @@
     </div>
   </div>
   <div classs="row mt-3">
-    <div id="post_comments" class="col-md-6">
+    <div id="post_comments" class="col">
       <%= render 'public/post_comments/show', post: @post %>
     </div>
-    <div id="comment-form" class="col-md-6 w-100 mx-auto">
+    <div id="comment-form" class="w-75 ml-auto">
       <%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>
     </div>
   </div>

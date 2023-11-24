@@ -5,6 +5,9 @@ class PostComment < ApplicationRecord
   has_one :inform_activity, as: :subject, dependent: :destroy
   validates :comment, presence: true
 
+  scope :published, -> {where(is_banned: false)}
+  scope :unpublished, ->  {where(is_banned: true)}
+
   private
 
     def inform_activities

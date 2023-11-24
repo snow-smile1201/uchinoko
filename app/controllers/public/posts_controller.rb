@@ -4,7 +4,7 @@ class Public::PostsController < ApplicationController
     @genres = Genre.all
     #公開ステータスが有効、かつユーザーとフォローしているユーザーの投稿を取得
     following_users_ids = current_user.following_users.pluck(:id)
-    posts = Post.published.where(user_id: [current_user.id, *following_users_ids])
+    posts = Post.published.includes(:user, :post_comments, :favorites).where(user_id: [current_user.id, *following_users_ids])
     @posts = posts.order(created_at: :desc).page(params[:page]).per(6)
   end
 
@@ -27,7 +27,7 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     @post_comment = PostComment.new
     if @post.is_published? == false && @post.user != current_user
-      redirect_to posts_path, notice: 'このページにはアクセスできません'
+      redirect_to posts_path, alert: 'このページにはアクセスできません'
     end
   end
 
@@ -40,7 +40,7 @@ class Public::PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to post_path(@post)
+      redirect_to post_path(@post), notice: '投稿を更新しました'
     else
       render :edit
     end
