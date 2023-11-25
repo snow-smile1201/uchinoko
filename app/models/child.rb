@@ -3,6 +3,9 @@ class Child < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_one_attached :profile_image
 
+  validates :name, presence: true
+  validates :birthday, presence: true
+
   def total_favorites_count
     total_favorites = 0
     self.posts.each do |post|
@@ -10,7 +13,7 @@ class Child < ApplicationRecord
     end
     total_favorites
   end
-  
+
   def total_comments_count
     total_comments = 0
     self.posts.each do |post|

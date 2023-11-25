@@ -4,7 +4,7 @@
   </div>
   <div class="row px-sm-0 px-5">
     <div class="col-md-8 px-5 px-sm-0">
-      <%= render "admin/shared/error_messages", resource: @child %>
+      <%= render "public/shared/error_messages", resource: @child %>
       <%= form_with model: @child, url: children_path, method: :post do |f| %>
         <%= render "public/children/form", child: @child, f: f %>
       <% end %>

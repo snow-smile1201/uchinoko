@@ -1,26 +1,49 @@
-<h2>Log in</h2>
-<%= flash[:notice] %>
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class='container mt-5'>
+  <h2 class='text-left ml-5 mb-md-3 mb-lg-5'>
+    <span class='bg-light p-2'>Log in</span>
+  </h2>
+  <div class="row m-2">
+    <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %> mx-auto"><%= message %></div>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+  <div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form-group row">
+        <label for="email" class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-3">
+          <div class="row">
+            <%= f.email_field :email, class: 'form-control', autofocus: true, autocomplete: "email" %>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="password" class="col-sm-3 col-form-label">Passwords</label>
+        <div class="col-sm-3">
+          <div class="row">
+            <%= f.password_field :password, class: 'form-control', autocomplete: "current-password" %>
+          </div>
+          <div class="row justify-content-end">
+            <% if devise_mapping.rememberable? %>
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mt-3">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3">
+          <%= f.submit 'Log in', class: 'btn btn-success btn-block' %>
+        </div>
+      </div>
+    <% end %>
+    <h4 class="text-left ml-5 mb-3">
+      <span class='bg-light p-2'>新規登録</span>
+    </h4>
+    <div class="d-flex ml-4">
+      <div class="mx-1"></div>
+      <span><%= link_to 'こちら', new_user_registration_path %>から登録してください</span>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
-
-<%= render "public/shared/links" %>
+</div>

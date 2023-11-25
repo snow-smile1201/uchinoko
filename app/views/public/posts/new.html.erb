@@ -4,7 +4,7 @@
   </div>
   <div class="row">
     <div class="col-md-8 mx-auto">
-      <%= render "admin/shared/error_messages", resource: @post %>
+      <%= render "public/shared/error_messages", resource: @post %>
       <%= form_with model: @post, url: posts_path do |f| %>
         <%= render "form", post: @post, user: @user, f: f %>
       <% end %>

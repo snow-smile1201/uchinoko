@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
 before_action :ensure_guest_user, only: [:edit]
+before_action :ensure_active_user, only: [:show]
 
   def index
     #フォロワーの多い順にユーザー一覧を表示
@@ -9,7 +10,7 @@ before_action :ensure_guest_user, only: [:edit]
   end
 
   def show
-    @user = User.active.find(params[:id])
+    @user = User.find(params[:id])
     @children = @user.children
     @following_users = @user.following_users
     @follower_users = @user.follower_users
@@ -53,7 +54,7 @@ before_action :ensure_guest_user, only: [:edit]
     @user = User.find(params[:id])
     @user.update(is_active: false)
     reset_session
-    redirect_to top_path, alert: "退会処理を実行いたしました。"
+    redirect_to root_path, alert: "退会処理を実行いたしました。"
   end
 
   def confirm_withdraw
@@ -69,6 +70,13 @@ before_action :ensure_guest_user, only: [:edit]
     @user = User.find(params[:id])
     if @user.guest_user?
       redirect_to user_path(current_user), alert: 'ゲストユーザーはプロフィール編集画面に遷移できません。'
+    end
+  end
+
+  def ensure_active_user
+    @user = User.find(params[:id])
+    if @user.is_active == false || (@user.is_banned == true)
+      redirect_to user_path(current_user), alert:"お探しのユーザーはすでに退会済みです"
     end
   end
 end

@@ -1,6 +1,6 @@
 <div class="container px-sm-0 px-5" >
   <div class="row my-4">
-    <h4>ジャンル：<%= Genre.find(@genre_id).name %>の投稿(<%= @posts.count %>件)</h34>
+    <h4>ジャンル：<%= Genre.find(@genre_id).name %>の投稿(<%= @posts.count %>件)</h4>
   </div>
   <div class="row h-100">
     <% @posts.each do |post|%>
