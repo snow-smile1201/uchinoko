@@ -3,7 +3,10 @@ class PostComment < ApplicationRecord
   belongs_to :user
   belongs_to :post
   has_one :inform_activity, as: :subject, dependent: :destroy
-  validates :comment, presence: true
+
+  validates :comment, presence: true, length: { maximum: 150 }
+  validates :user_id, presence: true
+  validates :post_id, presence: true
 
   scope :published, -> {where(is_banned: false)}
   scope :unpublished, ->  {where(is_banned: true)}

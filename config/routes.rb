@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'homes#top'
+    get 'search' => 'searches#search'
     resources :users, only: [:index, :edit, :update]
     resources :genres, only: [:index, :create, :edit, :update]
     resources :posts, only: [:index, :edit, :update] do

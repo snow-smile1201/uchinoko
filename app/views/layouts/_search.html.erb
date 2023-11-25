@@ -1,7 +1,5 @@
 <div class="form-inline">
-    <%= form_with url: search_path, method: :get, local: true do |f| %>
-      <%= f.select :range, options_for_select([['User'], ['Post']]), {}, class: "form-control" %>
-      <%= f.text_field :content, placeholder: "ユーザー名、タイトルを入力", class: "form-control" %>
-      <%= f.submit "Search", class: "btn btn-outline-dark" %>
-    <% end %>
+  <%= f.select :range, options_for_select([['User'], ['Post']]), {}, class: "form-control" %>
+  <%= f.text_field :content, placeholder: "ユーザー名、タイトルを入力", class: "form-control" %>
+  <%= f.submit "Search", class: "btn btn-outline-dark" %>
 </div>

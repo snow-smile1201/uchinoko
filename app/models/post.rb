@@ -2,12 +2,19 @@ class Post < ApplicationRecord
   belongs_to :user
   belongs_to :child
   belongs_to :genre
+  
+  validates :tite, presence: true, length: { maximum: 50 }
+  validates :body, presence: true, length: { maximum: 500 }
+  validates :is_active, presence: true
+  validates :is_banned, presence: true
+  
+  has_one_attached :post_image
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :tag_relationships, dependent: :destroy
   has_many :tags, through: :tag_relationships
   has_one :inform_activity, as: :subject, dependent: :destroy
-  has_one_attached :post_image
+  
   scope :published, -> {where(is_active: true, is_banned: false)}
   scope :unpublished, ->  {where(is_active: false, is_banned: true)}
   #引数にnを設定し、n日前の投稿数を取得

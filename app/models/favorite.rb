@@ -5,7 +5,7 @@ class Favorite < ApplicationRecord
 
   validates :user_id, presence: true
   validates :post_id, presence: true
-  #1つの記事に対しいいねは1回まに制限のためのバリデーション
+  #1つの投稿に対しいいねは1回まに制限のためのバリデーション
   validates :user_id, uniqueness: {scope: :post_id}
 
   after_create_commit :inform_activities

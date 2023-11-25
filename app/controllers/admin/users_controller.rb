@@ -11,12 +11,12 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      #ユーザーを公開停止すると投稿も公開停止にする
+      #ユーザーを公開停止すると投稿も全て公開停止にする
       if @user.is_banned == true
-        @user.unpublish_posts if @user.posts.exists?
+        @user.ban_posts if @user.posts.exists?
       #ユーザーを有効化すると投稿も有効になる
       elsif @user.is_banned == false
-        @user.publish_posts if @user.posts.exists?
+        @user.republish_posts if @user.posts.exists?
       end
         redirect_to edit_admin_user_path(@user)
     else

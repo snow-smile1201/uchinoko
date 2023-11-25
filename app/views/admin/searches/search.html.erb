@@ -1,0 +1,18 @@
+<div class="container px-sm-0 px-5" >
+  <% if @range == "User" %>
+    <div class="row my-4">
+      <h3>ユーザー検索結果(<%= @records.count %>件)</h3>
+    </div>
+    <div class="row">
+      <%= render 'admin/users/index', users: @records%>
+    </div>
+  <% else %>
+    <div class="row my-4">
+      <!--表示結果から非公開ステータスの投稿は除く-->
+      <h3>投稿検索結果(<%= @records.where(is_active: true).count %>件)</h3>
+    </div>
+    <div class="row">
+      <%= render partial: 'admin/posts/index', locals:{ posts: @records } %>
+    </div>
+  <% end %>
+</div>

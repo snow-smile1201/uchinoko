@@ -17,6 +17,8 @@
 </ul>
 <ul class="navbar-nav ml-auto">
   <li>
-    <%= render 'layouts/search' %>
+    <%= form_with url: search_path, method: :get, local: true do |f| %>
+      <%= render 'layouts/search', f: f %>
+    <% end %>
   </li>
 </ul>

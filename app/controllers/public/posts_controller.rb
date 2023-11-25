@@ -1,4 +1,6 @@
 class Public::PostsController < ApplicationController
+  before_action :ensure_publish_post, only: [:show]
+
   def index
     @user = current_user
     @genres = Genre.all
@@ -17,7 +19,7 @@ class Public::PostsController < ApplicationController
     @user = current_user
     @post = current_user.posts.new(post_params)
     if @post.save
-      redirect_to post_path(@post)
+      redirect_to post_path(@post), notice: '投稿しました'
     else
       render :new
     end
@@ -26,9 +28,6 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @post_comment = PostComment.new
-    if @post.is_published? == false && @post.user != current_user
-      redirect_to posts_path, alert: 'このページにはアクセスできません'
-    end
   end
 
   def edit
@@ -45,6 +44,7 @@ class Public::PostsController < ApplicationController
       render :edit
     end
   end
+  
   def destroy
     post = Post.find(params[:id])
     post.destroy
@@ -61,5 +61,12 @@ private
 
   def post_params
     params.require(:post).permit(:title, :body, :child_id, :genre_id, :is_active, :is_banned, :post_image)
+  end
+
+  def ensure_publish_post
+    @post = Post.find(params[:id])
+    unless @post.is_active == true && (@post.is_banned == false)
+      redirect_to posts_path, alert: "この投稿は非公開です"
+    end
   end
 end

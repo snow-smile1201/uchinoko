@@ -1,10 +1,13 @@
 <div class="container">
-  <div class="row mt-5">
-    <div class="col-7  mx-auto">
-      <h1>welcome to <strong>Uch</strong><i class="fa-solid fa-child-reaching"></i><strong>noco</strong></h1>
-      <p>In <strong>Uch</strong><i class="fa-solid fa-child-reaching"></i><strong>noco</strong>,</p>
-      <p>you can share and exchange your opinions, inpressions, and emotions</p>
-      <p>about your education!</p>
+  <div class="row m-2">
+    <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %> mx-auto"><%= message %></div>
+    <% end %>
+  </div>
+  <div class="row mt-3">
+    <div class="col-6 mx-auto">
+      <h1 class="text-center">welcome to <strong>Uch</strong><i class="fa-solid fa-child-reaching"></i><strong>noco</strong></h1>
+      <p class="m-5 text-center">Weave 18 years of parenting into an enduring story.</p>
     </div>
   </div>
   <div class="row">

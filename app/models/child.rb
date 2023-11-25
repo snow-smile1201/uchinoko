@@ -5,6 +5,7 @@ class Child < ApplicationRecord
 
   validates :name, presence: true
   validates :birthday, presence: true
+  validates :user_id, presence: true
 
   def total_favorites_count
     total_favorites = 0

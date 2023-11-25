@@ -3,7 +3,7 @@ before_action :ensure_guest_user, only: [:edit]
 before_action :ensure_active_user, only: [:show]
 
   def index
-    #フォロワーの多い順にユーザー一覧を表示
+    #フォロワーの多い順に有効ステータスのユーザー一覧を表示
     users = User.active.includes(:followers, :posts, :favorites)
     sorted_users = users.sort_by { |user| -user.followers.count }
     @users = Kaminari.paginate_array(sorted_users).page(params[:page]).per(5)
@@ -53,6 +53,8 @@ before_action :ensure_active_user, only: [:show]
   def withdraw
     @user = User.find(params[:id])
     @user.update(is_active: false)
+    #ユーザーが退会すると投稿は非公開にする
+    @user.unpublish_posts
     reset_session
     redirect_to root_path, alert: "退会処理を実行いたしました。"
   end
@@ -72,10 +74,10 @@ before_action :ensure_active_user, only: [:show]
       redirect_to user_path(current_user), alert: 'ゲストユーザーはプロフィール編集画面に遷移できません。'
     end
   end
-
+  #退会済・停止済のユーザー詳細ページには遷移しない
   def ensure_active_user
     @user = User.find(params[:id])
-    if @user.is_active == false || (@user.is_banned == true)
+    unless @user.is_active == true && (@user.is_banned == false)
       redirect_to user_path(current_user), alert:"お探しのユーザーはすでに退会済みです"
     end
   end

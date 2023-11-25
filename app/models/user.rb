@@ -4,13 +4,18 @@ class User < ApplicationRecord
   GUEST_USER_EMAIL = "guest@example.com"
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+         
+  validates :name, presence: true, uniqueness: true
+  validates :policy, length: { maximum: 1000 }
+  validates :is_active, presence: true
+  validates :is_banned, presence: true
+  has_one_attached :profile_image
+  
   has_many :children, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :inform_activities, dependent: :destroy
-  has_one_attached :profile_image
-
   #フォロー・フォロワーのリレーションの記述
   has_many :followings, class_name: "UserRelationship", foreign_key: "following_id", dependent: :destroy
   has_many :followers, class_name: "UserRelationship", foreign_key: "follower_id", dependent: :destroy
@@ -69,10 +74,14 @@ class User < ApplicationRecord
   end
 
   def unpublish_posts
+    self.posts.update_all(is_active: false)
+  end
+
+  def ban_posts
     self.posts.update_all(is_banned: true)
   end
 
-  def publish_posts
+  def republish_posts
     self.posts.update_all(is_banned: false)
   end
   #TODO:N+1問題
