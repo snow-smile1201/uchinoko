@@ -49,7 +49,7 @@
                   <div id="favorite_button_<%= @post.id %>" class="col">
                     <%= render 'public/favorites/favorite', post: @post %>
                   </div>
-                  <div class="col"><i class="fa-regular fa-comment-dots"></i><%= "#{@post.post_comments.count}" %>コメント</div>
+                  <div id="comment_counter" class="col"><%= render 'public/post_comments/counter', post: @post %></div>
                   <div class="col"><i class="fa-solid fa-tags"></i><%= @post.genre.name %></div>
                 </div>
               </div>

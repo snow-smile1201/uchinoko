@@ -2,20 +2,19 @@ class Post < ApplicationRecord
   belongs_to :user
   belongs_to :child
   belongs_to :genre
-  
-  validates :tite, presence: true, length: { maximum: 50 }
+
+  validates :title, presence: true, length: { maximum: 50 }
   validates :body, presence: true, length: { maximum: 500 }
-  validates :is_active, presence: true
-  validates :is_banned, presence: true
-  
+
   has_one_attached :post_image
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :tag_relationships, dependent: :destroy
   has_many :tags, through: :tag_relationships
   has_one :inform_activity, as: :subject, dependent: :destroy
-  
+
   scope :published, -> {where(is_active: true, is_banned: false)}
+  scope :unbanned, -> {where(is_banned: false)}
   scope :unpublished, ->  {where(is_active: false, is_banned: true)}
   #引数にnを設定し、n日前の投稿数を取得
   scope :created_days_ago, -> (n) { where(created_at: n.days.ago.all_day) }
@@ -31,11 +30,11 @@ class Post < ApplicationRecord
     end
     post_image.variant(resize_to_limit: [width, height]).processed
   end
-  
+
   def is_published?
     self.is_active == true && self.is_banned == false
   end
-  
+
   def is_active?
     self.is_active == true ? "公開" : "非公開"
   end

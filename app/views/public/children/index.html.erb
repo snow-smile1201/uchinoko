@@ -1,6 +1,11 @@
 <div class="container px-sm-0 px-5">
   <div class="row my-4">
-    <h3>うちの子追加</h3>
+    <h3>Uchinoko登録</h3>
+  </div>
+  <div class="row m-2">
+    <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %> mx-auto"><%= message %></div>
+    <% end %>
   </div>
   <div class="row px-sm-0 px-5">
     <div class="col-md-8 px-5 px-sm-0">

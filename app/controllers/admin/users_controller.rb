@@ -18,7 +18,7 @@ class Admin::UsersController < ApplicationController
       elsif @user.is_banned == false
         @user.republish_posts if @user.posts.exists?
       end
-        redirect_to edit_admin_user_path(@user)
+        redirect_to edit_admin_user_path(@user), alert: "ユーザーの管理ステータスを変更しました。"
     else
       render :edit
     end

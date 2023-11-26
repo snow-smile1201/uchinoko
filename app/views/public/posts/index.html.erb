@@ -34,16 +34,23 @@
             </tbody>
           </table>
         </div>
-        <div class="col-10 px-2">
-          <div class="row">
-            <% @posts.each do |post|%>
-              <div class="col-sm-12 col-md-6 mb-3">
-                <%= render partial: 'index', locals:{ post: post } %>
-              </div>
-            <% end %>
-            <%= paginate @posts %>
+        <% if @posts.empty? %>
+          <p class="text-center p-5">
+            <%= link_to "こちら", children_path %>からお子様の情報を登録すると、投稿が可能になります。<br><br>
+            <%= link_to "こちら", users_path %>からユーザーをフォローすると、フォローしたユーザーの投稿もタイムライン上に表示されます。
+          </p>
+        <% else %>
+          <div class="col-10 px-2">
+            <div class="row">
+              <% @posts.each do |post|%>
+                <div class="col-sm-12 col-md-6 mb-3">
+                  <%= render partial: 'index', locals:{ post: post } %>
+                </div>
+              <% end %>
+              <%= paginate @posts %>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>

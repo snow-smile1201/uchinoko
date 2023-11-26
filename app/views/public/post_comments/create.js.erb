@@ -1,2 +1,3 @@
+$('#comment_counter').html("<%= j(render('public/post_comments/counter', post: @post)) %>");
 $('#post_comments').html("<%= j(render "public/post_comments/show", post: @post) %>");
 $("#comment_form").val('');

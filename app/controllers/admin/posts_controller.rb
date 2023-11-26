@@ -1,6 +1,6 @@
 class Admin::PostsController < ApplicationController
   def index
-    @posts = Post.includes(:user, :favorites, :post_comments)
+    @posts = Post.includes(:user, :favorites, :post_comments).page(params[:page]).per(10)
   end
 
   def edit
@@ -10,7 +10,7 @@ class Admin::PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to edit_admin_post_path(@post)
+      redirect_to edit_admin_post_path(@post), alert: "投稿の管理ステータスを変更しました。"
     else
       render :edit
     end

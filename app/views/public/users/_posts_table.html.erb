@@ -16,7 +16,7 @@
         <tr>
           <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
           <td><i class="fa-solid fa-heart" style="color: red;"></i> <%= post.favorites.count %></td>
-          <td><i class="fa-regular fa-comment-dots"></i> <%= post.post_comments.count %></td>
+          <td id="comment_counter"><%= render 'public/post_comments/counter', post: post %></td>
           <td><i class="fa-solid fa-key"></i> <%= post.is_active? %></td>
         </tr>
       <% end %>

@@ -18,7 +18,7 @@ class Child < ApplicationRecord
   def total_comments_count
     total_comments = 0
     self.posts.each do |post|
-      total_comments += post.post_comments.count
+      total_comments += post.post_comments.published.count
     end
     total_comments
   end

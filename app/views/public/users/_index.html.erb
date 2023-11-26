@@ -18,7 +18,7 @@
               <%= image_tag user.get_profile_image(50, 50) %>
             </td>
             <td><%= link_to user.name, user_path(user) %></td>
-            <td class="text-center"><%= user.posts.count %></td>
+            <td class="text-center"><%= user.posts.published.count %></td>
             <td class="text-center"><%= user.total_favorites_count %></td>
             <td class="text-center"><%= user.followers.count %></td>
             <td> <%= render "public/user_relationships/btn", user: user, options: { class: "follow-link"} %></td>

@@ -1,5 +1,6 @@
 class Public::PostsController < ApplicationController
   before_action :ensure_publish_post, only: [:show]
+  before_action :check_child_presence, only: [:new]
 
   def index
     @user = current_user
@@ -37,6 +38,7 @@ class Public::PostsController < ApplicationController
   end
 
   def update
+    @user = current_user
     @post = Post.find(params[:id])
     if @post.update(post_params)
       redirect_to post_path(@post), notice: '投稿を更新しました'
@@ -44,7 +46,7 @@ class Public::PostsController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     post = Post.find(params[:id])
     post.destroy
@@ -65,8 +67,21 @@ private
 
   def ensure_publish_post
     @post = Post.find(params[:id])
-    unless @post.is_active == true && (@post.is_banned == false)
-      redirect_to posts_path, alert: "この投稿は非公開です"
+    #投稿者本人以外は非公開設定の投稿は見ることができない。
+    unless @post.is_banned == true
+      if @post.user != current_user && @post.is_active == false
+        redirect_to posts_path, alert: "この投稿は非公開です"
+      end
+    else
+      #公開停止の投稿は投稿者本人も見ることができない
+      redirect_to posts_path, alert: "この投稿は公開停止中です"
+    end
+  end
+
+  def check_child_presence
+    user = current_user
+    if user.children.empty?
+      redirect_to children_path, notice: "投稿前にこちらからお子さまの情報を登録してください"
     end
   end
 end

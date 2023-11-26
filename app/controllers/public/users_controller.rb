@@ -1,5 +1,5 @@
 class Public::UsersController < ApplicationController
-before_action :ensure_guest_user, only: [:edit]
+before_action :ensure_collect_user, only: [:edit]
 before_action :ensure_active_user, only: [:show]
 
   def index
@@ -16,7 +16,7 @@ before_action :ensure_active_user, only: [:show]
     @follower_users = @user.follower_users
     #ユーザー本人には全ての投稿を表示、それ以外のユーザーには公開ステータスの投稿のみ表示
     if @user == current_user
-      @posts = @user.posts.order(created_at: :desc).page(params[:page]).per(10)
+      @posts = @user.posts.unbanned.order(created_at: :desc).page(params[:page]).per(10)
     else
       @posts = @user.posts.published.order(created_at: :desc).page(params[:page]).per(10)
     end
@@ -67,13 +67,15 @@ before_action :ensure_active_user, only: [:show]
     params.require(:user).permit(:email, :name, :policy, :is_active, :profile_image)
   end
 
-  #ゲストユーザーのプロフィール編集防止
-  def ensure_guest_user
+  def ensure_collect_user
     @user = User.find(params[:id])
     if @user.guest_user?
       redirect_to user_path(current_user), alert: 'ゲストユーザーはプロフィール編集画面に遷移できません。'
+    elsif @user != current_user
+      redirect_to user_path(current_user), alert: '他ユーザーのプロフィール編集画面には遷移できません。'
     end
   end
+
   #退会済・停止済のユーザー詳細ページには遷移しない
   def ensure_active_user
     @user = User.find(params[:id])
