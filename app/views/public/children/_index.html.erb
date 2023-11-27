@@ -6,7 +6,13 @@
           <%= image_tag child.get_profile_image(50, 50), class: "my-3 rounded-circle" %>
         </div>
         <div class="col-4">
-          <div class="row mt-2"><%= link_to child.name, edit_child_path(child) %>(<%= child.posts.count %>)</div>
+          <div class="row mt-2">
+            <% if child.user == current_user %>
+              <%= link_to child.name, edit_child_path(child) %>(<%= child.posts.count %>)
+            <% else %>
+              <%= child.name %>(<%= child.posts.count %>)
+            <% end %>
+          </div>
           <div class="row mt-2"><i class="fa-solid fa-cake-candles"></i>   <%= child.birthday.strftime('%m/%d') %></div>
         </div>
         <div class="col-4">
@@ -17,7 +23,11 @@
     <% end %>
   <% else %>
     <div class="row mt-3">
+      <% if user = current_user %>
         <div class="col">最初に<%= link_to "こちら", children_path %>からお子様を登録してください。</div>
+      <% else %>
+       <div class="col">登録はありません。</div>
+      <% end %>
       </div>
   <% end %>
 </div>

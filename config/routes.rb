@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       resource :user_relationships, only: [:create, :destroy]
       end
     get 'users/:id/my_favorites' => 'users#my_favorites', as: 'my_favorites'
-    get 'users/confirm_withdraw' => 'users#confirm_withdraw', as: 'confirm_withdraw'
+    get 'users/:id/confirm_withdraw' => 'users#confirm_withdraw', as: 'confirm_withdraw'
     patch 'users/:id/withdraw' => 'users#withdraw', as: 'withdraw'
 
     resources :children, only: [:index, :create, :show, :edit, :update]
