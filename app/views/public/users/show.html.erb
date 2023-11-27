@@ -42,7 +42,9 @@
                   <% end %>
                 </div>
                 <div class="col-3">
+                  <%= link_to my_favorites_path, class: "btn btn-sm btn-block btn-danger" do %>
                     <span class="mr-2">likes</span> <i class="fa-solid fa-heart" style="color: white;"></i>
+                  <% end %>
                 </div>
                   <% unless @user.children.empty? %>
                     <div class="col-3">
