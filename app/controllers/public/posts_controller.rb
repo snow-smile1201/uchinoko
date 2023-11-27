@@ -1,4 +1,5 @@
 class Public::PostsController < ApplicationController
+  before_action :authenticate_user!
   before_action :ensure_publish_post, only: [:show]
   before_action :check_child_presence, only: [:new]
 
@@ -67,13 +68,13 @@ private
 
   def ensure_publish_post
     @post = Post.find(params[:id])
-    #投稿者本人以外は非公開設定の投稿は見ることができない。
+    #投稿者本人以外は非公開設定の投稿を見ることができない。
     unless @post.is_banned == true
       if @post.user != current_user && @post.is_active == false
         redirect_to posts_path, alert: "この投稿は非公開です"
       end
     else
-      #公開停止の投稿は投稿者本人も見ることができない
+      #管理者により公開停止の投稿は投稿者本人も見ることができない
       redirect_to posts_path, alert: "この投稿は公開停止中です"
     end
   end

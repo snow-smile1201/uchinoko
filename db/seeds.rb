@@ -12,5 +12,5 @@ end
 
 Admin.create!(
    email: 'admin@admin',
-   password: 'admin1'
+   password: ENV['ADMIN_PASSWORD']
 )

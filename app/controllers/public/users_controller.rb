@@ -1,6 +1,7 @@
 class Public::UsersController < ApplicationController
-before_action :ensure_collect_user, only: [:edit]
-before_action :ensure_active_user, only: [:show]
+  before_action :authenticate_user!
+  before_action :ensure_collect_user, only: [:edit]
+  before_action :ensure_active_user, only: [:show]
 
   def index
     #フォロワーの多い順に有効ステータスのユーザー一覧を表示
@@ -14,7 +15,7 @@ before_action :ensure_active_user, only: [:show]
     @children = @user.children
     @following_users = @user.following_users
     @follower_users = @user.follower_users
-    #ユーザー本人には全ての投稿を表示、それ以外のユーザーには公開ステータスの投稿のみ表示
+    #ユーザー本人には管理者に停止された投稿以外は全てを表示、それ以外のユーザーには公開ステータスの投稿のみ表示
     if @user == current_user
       @posts = @user.posts.unbanned.order(created_at: :desc).page(params[:page]).per(10)
     else
@@ -49,12 +50,11 @@ before_action :ensure_active_user, only: [:show]
     favorite_posts_ids = Favorite.where(user_id: current_user.id).pluck(:post_id)
     @posts = Post.published.where(id: favorite_posts_ids).page(params[:page]).per(10)
   end
-
+  #ユーザーが退会すると投稿は非公開にする
   def withdraw
     @user = User.find(params[:id])
-    @user.update(is_active: false)
-    #ユーザーが退会すると投稿は非公開にする
     @user.unpublish_posts
+    @user.update(is_active: false)
     reset_session
     redirect_to root_path, alert: "退会処理を実行いたしました。"
   end

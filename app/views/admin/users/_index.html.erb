@@ -1,6 +1,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+        <th>ID</th>
         <th></th>
         <th>ユーザー名</th>
         <th>投稿数</th>
@@ -14,6 +15,9 @@
     <tbody>
       <% users.each do |user| %>
         <tr>
+          <td>
+            <%= user.id %>
+          </td>
           <td>
             <%= image_tag user.get_profile_image(50, 50) %>
           </td>

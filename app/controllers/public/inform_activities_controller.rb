@@ -1,4 +1,6 @@
 class Public::InformActivitiesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @activities = current_user.inform_activities.order(created_at: :desc).page(params[:page]).per(10)
     @activities.where(is_unread: true).each do |activity|

@@ -1,8 +1,10 @@
 <div class="container">
   <div class="row m-2">
-    <% flash.each do |message_type, message| %>
-    <div class="flash-message <%= message_type %> mx-auto"><%= message %></div>
-    <% end %>
+    <div class="col">
+      <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %> mx-auto text-center"><%= message %></div>
+      <% end %>
+    </div>
   </div>
   <div class="row my-4">
     <div class="col-6">
@@ -55,9 +57,6 @@
     </div>
     <div id="post_comments" class="col-6">
       <%= render 'public/post_comments/show', post: @post %>
-      <div id="comment-form">
-        <!--%= render 'public/post_comments/form', { post: @post, post_comment: @post_comment } %>-->
-      </div>
     </div>
   </div>
 </div>
