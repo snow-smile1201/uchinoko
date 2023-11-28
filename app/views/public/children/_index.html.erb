@@ -23,7 +23,7 @@
     <% end %>
   <% else %>
     <div class="row mt-3">
-      <% if user = current_user %>
+      <% if user == current_user %>
         <div class="col">最初に<%= link_to "こちら", children_path %>からお子様を登録してください。</div>
       <% else %>
        <div class="col">登録はありません。</div>
