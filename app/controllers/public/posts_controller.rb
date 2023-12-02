@@ -6,6 +6,7 @@ class Public::PostsController < ApplicationController
   def index
     @user = current_user
     @genres = Genre.all
+    @tags = Tag.find(TagRelationship.group(:tag_id).order('count(post_id) desc').limit(10).pluck(:tag_id))
     #公開ステータスが有効、かつユーザーとフォローしているユーザーの投稿を取得
     following_users_ids = current_user.following_users.pluck(:id)
     posts = Post.published.includes(:user, :post_comments, :favorites).where(user_id: [current_user.id, *following_users_ids])

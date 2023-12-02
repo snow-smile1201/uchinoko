@@ -1,29 +1,21 @@
 <!--todo:無限スクロール追加実装予定-->
 <div class="scroll-list jscroll">
-  <table class="table">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th class="text-center">Posts</th>
-        <th class="text-center">Favorites</th>
-        <th class="text-center">Followers</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% users.each do |user| %>
-          <tr>
-            <td>
-              <%= image_tag user.get_profile_image(50, 50) %>
-            </td>
-            <td><%= link_to user.name, user_path(user) %></td>
-            <td class="text-center"><%= user.posts.published.count %></td>
-            <td class="text-center"><%= user.total_favorites_count %></td>
-            <td class="text-center"><%= user.followers.count %></td>
-            <td> <%= render "public/user_relationships/btn", user: user, options: { class: "follow-link"} %></td>
-          </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table">
+      <tbody>
+        <% users.each do |user| %>
+            <tr>
+              <td>
+                <%= image_tag user.get_profile_image(50, 50) %>
+              </td>
+              <td><%= link_to user.name, user_path(user) %></td>
+              <td class="text-center"><i class="fa-solid fa-file-lines"></i> <%= user.posts.published.count %></td>
+              <td class="text-center"><i class="fa-solid fa-heart" style="color: red;"></i> <%= user.total_favorites_count %></td>
+              <td class="text-center"><i class="fa-solid fa-users"></i> <%= user.followers.count %></td>
+              <td> <%= render "public/user_relationships/btn", user: user, options: { class: "follow-link"} %></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

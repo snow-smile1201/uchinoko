@@ -1,11 +1,12 @@
-<div class="container px-sm-0 px-5">
+<div class="container px-sm-0-md-5">
   <div class="row my-4">
-    <h3>プロフィール編集</h3>
+    <div class="col"><h3>プロフィール編集</h3></div>
   </div>
-  <div class="row px-sm-0 px-5">
-    <div class="col-md-8 px-5 px-sm-0">
+  <div class="row px-sm-0-md-5">
+    <div class="col-md-8 px-sm-0-md-5">
       <%= render "admin/shared/error_messages", resource: @user %>
       <%= form_with model: @user, url: user_path(@user), method: :patch do |f| %>
+      <div class="table-responsive">
         <table class="table table-borderless">
           <tbody>
             <tr>
@@ -24,9 +25,11 @@
               </td>
             </tr>
             <tr>
-              <td><%= f.submit '更新',class:"btn btn-success" %></td>
+              <td class="d-flex justify-content-end"><%= f.submit '更新',class:"btn btn-success" %></td>
+            </tr>
           </tbody>
         </table>
+      </div>
       <% end %>
     </div>
   </div>

@@ -5,42 +5,52 @@
     <% end %>
   </div>
   <div class="row">
-    <% unless @user.children.empty? %>
+
     <div class="col d-flex justify-content-end">
-      <%= link_to new_post_path, class: "col-2 btn btn-sm btn-block btn-success" do %>
+    <% unless @user.children.empty? %>
+      <%= link_to new_post_path, class: "col-3 btn btn-sm btn-block btn-success" do %>
         + new <i class="fa-solid fa-file-signature"></i>
       <% end %>
-    </div>
     <% end %>
+    <div class="dropdown">
+      <button class="col-3 btn btn-block btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <strong>Genre</strong>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <ul>
+          <% @genres.each do |genre| %>
+            <li class="dropdown-item"><%= link_to genre.name, genre_search_path(genre_id: genre.id), class:"text-reset" %>(<%= genre.posts.published.count %>)</li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="col-3 btn btn-block btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <strong>#hashtags</strong>
+      </button>
+      <div class="dropdown-menu">
+        <ul>
+          <% @tags.each do |tag| %>
+            <li class="dropdown-item">#<%= link_to tag.hashname, hashtag_path(tag.hashname), class:"text-reset" %>( <%= tag.posts.published.count %>)</li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+
+    </div>
   </div>
+
   <div class="row">
     <div class="col">
       <div class="card-list-container py-3 d-flex">
-        <div class="col-2">
-          <table class="table table-sm">
-            <thead class="thead-light">
-              <tr>
-                <th>ジャンル</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @genres.each do |genre| %>
-                <tr>
-                  <td><%= link_to genre.name, genre_search_path(genre_id: genre.id), class:"text-reset" %></td>
-                  <td><%= genre.posts.published.count %></td>
-                </tr>
-              <%end%>
-            </tbody>
-          </table>
-        </div>
         <% if @posts.empty? %>
           <p class="text-center p-5">
             <%= link_to "こちら", children_path %>からお子様の情報を登録すると、投稿が可能になります。<br><br>
             <%= link_to "こちら", users_path %>からユーザーをフォローすると、フォローしたユーザーの投稿もタイムライン上に表示されます。
           </p>
         <% else %>
-          <div class="col-10 px-2">
+          <div class="col px-2">
             <div class="row">
               <% @posts.each do |post|%>
                 <div class="col-sm-12 col-md-6 mb-3">

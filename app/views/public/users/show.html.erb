@@ -36,18 +36,18 @@
           <div class="card-footer">
             <div class="row btn-wrapper justify-content-center">
               <% if current_user == @user %>
-                <div class="col-3">
+                <div class="col-4">
                   <%= link_to children_path, class: "btn btn-sm btn-block btn-info" do %>
                     + new <i class="fa-solid fa-child-reaching"></i>
                   <% end %>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                   <%= link_to my_favorites_path, class: "btn btn-sm btn-block btn-danger" do %>
                     <span class="mr-2">likes</span> <i class="fa-solid fa-heart" style="color: white;"></i>
                   <% end %>
                 </div>
                   <% unless @user.children.empty? %>
-                    <div class="col-3">
+                    <div class="col-4">
                       <%= link_to new_post_path, class: "btn btn-sm btn-block btn-success" do %>
                         + new <i class="fa-solid fa-file-signature"></i>
                       <% end %>
