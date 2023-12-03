@@ -1,18 +1,21 @@
-<div class="container px-sm-0 px-5" >
+<div class="container" >
   <% if @range == "User" %>
     <div class="row my-4">
-      <h3>ユーザー検索結果(<%= @records.count %>件)</h3>
+      <h4>ユーザー　”<%= @content %>”　の検索結果(<%= @records.count %>件)</h4>
     </div>
     <div class="row">
-      <%= render 'public/users/index', users: @records%>
+      <div class="col-sm-12 col-md-10 mx-auto">
+        <%= render 'public/users/index', users: @records%>
+        <%= paginate @records %>
+      </div>
     </div>
   <% else %>
     <div class="row my-4">
-      <h3>投稿検索結果(<%= @records.count %>件)</h3>
+      <h4>タイトル　”<%= @content %>”　の検索結果(<%= @records.count %>件)</h4>
     </div>
     <div class="row h-100">
       <% @records.each do |post|%>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-6 mb-3">
           <%= render partial: 'public/posts/index', locals:{ post: post } %>
         </div>
       <% end %>

@@ -1,42 +1,50 @@
-  <table class="table table-borderless table-sm">
-    <tbody>
-      <tr>
-        <th><%= f.label :child_id, "うちのこ" %></th>
-        <td><%= f.collection_select :child_id, user.children, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
-      </tr>
-      <tr>
-        <th><%= f.label :post_image, "画像" %></th>
-        <td><%= f.file_field :post_image, accept: "image/jpeg" %></td>
-      </tr>
-      <tr>
-        <th><%= f.label :title, "タイトル" %></th>
-        <td><%= f.text_field :title, :placeholder => "タイトル", class: "form-control" %></td>
-      </tr>
-      <tr>
-        <th><%= f.label :body, "投稿内容" %></th>
-        <td><%= f.text_area :body, rows: 7, placeholder:place_holder, class: "form-control" %></td>
-      </tr>
-      <tr>
-        <th><%= f.label :genre_id, "ジャンル" %></th>
-        <td><%= f.collection_select :genre_id, Genre.all, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %></td>
-      </tr>
-      <tr>
-        <th><%= f.label :is_active, "公開ステータス" %></th>
-        <td>
-          <%= f.radio_button :is_active, true %>
-          <strong><%= f.label :is_active_true, "公開"%></strong>
-          <%= "　 　"%>
-          <%= f.radio_button :is_active, false %>
-          <strong style="color: gray;"><%= f.label :is_active_false, "非公開"%></strong>
-        </td>
-      </tr>
-      <tr>
-        <th></th>
-        <% if post.new_record? %>
-          <td><%= f.submit '投稿する',class:"btn btn-success" %></td>
-        <% else %>
-          <td><%= f.submit '更新する',class:"btn btn-success" %></td>
-        <% end %>
-      </tr>
-    </tbody>
-  </table>
+<div class="container">
+  <div class="row my-2">
+    <div class="col">
+      <strong><%= f.label :child_id, "Uchinoko" %></strong>
+      <%= f.collection_select :child_id, user.children, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col">
+      <strong><%= f.label :post_image, "image" %></strong>
+      <%= f.file_field :post_image, accept: "image/jpeg" %>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col">
+      <strong><%= f.label :title, "Title" %></strong>
+      <%= f.text_field :title, :placeholder => "タイトル", class: "form-control" %>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col">
+      <strong><%= f.label :body, "Story" %></strong>
+      <%= f.text_area :body, rows: 7, placeholder:place_holder, class: "form-control" %>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col">
+      <strong><%= f.label :genre_id, "Genre" %></strong>
+      <%= f.collection_select :genre_id, Genre.all, :id, :name, { include_blank: "--選択して下さい--"}, {class: "form-control"} %>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col">
+      <strong><%= f.label :is_active, "Privacy" %></strong><br>
+      <%= f.radio_button :is_active, true %>
+      <strong><%= f.label :is_active_true, "公開"%></strong>
+      <%= f.radio_button :is_active, false, class: "ml-5" %>
+      <strong style="color: gray;"><%= f.label :is_active_false, "非公開"%></strong>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col d-flex justify-content-end">
+      <% if post.new_record? %>
+        <td><%= f.submit 'Post',class:"btn btn-success" %></td>
+      <% else %>
+        <td><%= f.submit 'Update',class:"btn btn-success" %></td>
+      <% end %>
+    </div>
+  </div>
+</div>

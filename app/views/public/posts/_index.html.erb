@@ -1,38 +1,37 @@
-<!--TODO:カードの高さを揃える,イメージの大きさはcssでobject-fit containすることを検討-->
 <!--todo:無限スクロール追加実装予定-->
 <div class="container">
   <div class="row">
-    <div class="card w-100 h-100 d-flex shadow-lg">
-      <div class="row mt-4">
-        <div class="col-11 mx-auto">
+    <div class="card w-100 d-flex shadow-lg">
+      <div class="row mt-3">
+        <div class="col-10 mx-auto">
           <p class="card-title h5">
             <%= link_to post_path(post.id), class: "text-reset" do %>
               <strong><i class="fa-solid fa-child-reaching"></i>  <%= post.title %></span></strong>
             <% end %>
-            <div class="col text-right">
-              <span>
-                <%= post.created_at.strftime('%Y/%m/%d') %>
-                <%if post.user == current_user %>
-                  <%= link_to edit_post_path(post) do %>
-                    <i class="fa-regular fa-pen-to-square ml-3"></i>
-                  <% end %>
-                  <%= link_to post_path(post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
-                    <i class="fa-regular fa-trash-can text-danger ml-3"></i>
-                  <% end %>
+          </p>
+          <div class="col text-right">
+            <span>
+              <%= post.created_at.strftime('%Y/%m/%d') %>
+              <%if post.user == current_user %>
+                <%= link_to edit_post_path(post) do %>
+                  <i class="fa-regular fa-pen-to-square ml-4"></i>
                 <% end %>
+                <%= link_to post_path(post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
+                  <i class="fa-regular fa-trash-can text-danger ml-4"></i>
+                <% end %>
+              <% end %>
               </span>
             </div>
-          </p>
         </div>
       </div>
-        <div class="card-body row flex-column mx-auto">
+        <div class="card-body">
           <%= link_to post_path(post.id) do %>
-              <%= image_tag post.get_post_image(300, 300), class:"card-img-top" %>
-            <% end %>
-          <p class="card-text mt-3">
+            <%= image_tag post.get_post_image(385, 395), class:"card-img-top img-fluid" %>
+          <% end %>
+          <p class="card-text mt-3 text-truncate" style="max-width: 385px;">
             <% post.tags.each do |tag| %>
               <%= link_to hashtag_path(tag.hashname) do %>
-                <span class="d-inline-block text-truncate" style="max-width: 100px;">#<%= tag.hashname %></span>
+                <span class="d-inline-block">#<%= tag.hashname %></span>
               <% end %>
             <% end %>
           </p>
@@ -40,19 +39,18 @@
         <div class="card-footer">
           <div class="container">
             <div class="row">
-              <!--TODO:画像を綺麗な円形に調整-->
-              <div class="col-3 text-center"><%= image_tag post.user.get_profile_image(100, 100), class: "img-fluid rounded-circle" %></div>
+              <div class="col-3 text-center"><%= image_tag post.user.get_profile_image(50, 50), class: "img-fluid rounded-circle" %></div>
               <div class="col-9">
                 <div class="row">Posted by: <strong><%= link_to "#{post.user.name}", user_path(post.user.id), class: "text-reset" %></strong></div>
-                <div class="row mt-2">For: <strong><%= post.child.name %></strong></div>
-                <div class="row mt-2">
-                  <div id="favorite_button_<%= post.id %>" class="col-3">
-                    <%= render 'public/favorites/favorite', post: post %>
-                  </div>
-                  <div id="comment_counter" class="col-3"><%= render 'public/post_comments/counter', post: post %></div>
-                  <div class="col-5"><i class="fa-solid fa-tags"></i><%= post.genre.name %></div>
-                </div>
+                <div class="row mt-1">For: <strong><%= post.child.name %></strong></div>
               </div>
+            </div>
+            <div class="row">
+              <div id="favorite_button_<%= post.id %>" class="col-3 text-center">
+                <%= render 'public/favorites/favorite', post: post %>
+              </div>
+              <div id="comment_counter" class="col-3 text-center"><%= render 'public/post_comments/counter', post: post %></div>
+              <div class="col-6"><i class="fa-solid fa-tags"></i><%= post.genre.name %></div>
             </div>
           </div>
         </div>

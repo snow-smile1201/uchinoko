@@ -1,65 +1,67 @@
-<div class="container my-5">
+<div class="container my-3">
   <div class="row m-2">
     <% flash.each do |message_type, message| %>
       <div class="flash-message <%= message_type %> mx-auto"><%= message %></div>
     <% end %>
   </div>
   <div class="row">
-    <div class="card w-75 mx-auto shadow-lg">
-      <div class="row mx-auto mt-4">
-        <div class="col-11 mx-auto">
+    <div class="col-md-9 mx-auto p-0">
+      <div class="card w-100 mx-auto shadow-lg">
+        <div class="row mt-4">
+          <div class="col-10 mx-auto">
             <p class="card-title h5">
               <strong><i class="fa-solid fa-child-reaching"></i>  <%= @post.title %></span></strong>
-              <div class="col text-right">
-                <span>
-                  <%= @post.created_at.strftime('%Y/%m/%d') %>
-                  <%if @post.user == current_user %>
-                    <%= link_to edit_post_path(@post) do %>
-                      <i class="fa-regular fa-pen-to-square ml-3"></i>
-                    <% end %>
-                    <%= link_to post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
-                      <i class="fa-regular fa-trash-can text-danger ml-3"></i>
-                    <% end %>
-                      <% if @post.is_active == true %>
-                        <strong class="border rounded p-1" style="color: white; background-color: green;">公開中</strong>
-                      <% else %>
-                        <strong class="border rounded p-1" style="color: white; background-color: gray;">非公開</strong>
-                      <% end %>
-                    <% end %>
-                  </span>
-              </div>
             </p>
-            <%= image_tag @post.get_post_image(1000, 1000), class:"card-img-top" %>
-          </div>
-      </div>
-        <div class="card-body row px-5">
-          <p class="card-text">
-            <!--TODO：simple_formatなので改行は1行のみ反映。safe_joinはハッシュタグのリンクが解除される-->
-            <%= simple_format(h(render_with_hashtags(@post.body))) %>
-          </p>
-        </div>
-        <div class="card-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col-3 text-center"><%= image_tag @post.user.get_profile_image(80, 80), class: "img-fluid rounded-circle" %></div>
-              <div class="col-9">
-                <div class="row">Posted by: <strong><%= link_to "#{@post.user.name}", user_path(@post.user.id), class: "text-reset" %></strong></div>
-                <div class="row mt-2">For: <strong><%= @post.child.name %></strong></div>
-                <div class="row mt-2">
-                  <div id="favorite_button_<%= @post.id %>" class="col">
-                    <%= render 'public/favorites/favorite', post: @post %>
-                  </div>
-                  <div id="comment_counter" class="col"><%= render 'public/post_comments/counter', post: @post %></div>
-                  <div class="col"><i class="fa-solid fa-tags"></i><%= @post.genre.name %></div>
-                </div>
-              </div>
+            <div class="col text-right mb-2">
+              <span>
+                <%= @post.created_at.strftime('%Y/%m/%d') %>
+                <%if @post.user == current_user %>
+                  <%= link_to edit_post_path(@post) do %>
+                    <i class="fa-regular fa-pen-to-square ml-3"></i>
+                  <% end %>
+                  <%= link_to post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
+                    <i class="fa-regular fa-trash-can text-danger ml-3"></i>
+                  <% end %>
+                  <% if @post.is_active == true %>
+                    <strong class="border rounded p-1 ml-3" style="color: white; background-color: green;">公開中</strong>
+                  <% else %>
+                    <strong class="border rounded p-1 ml-3" style="color: white; background-color: gray;">非公開</strong>
+                  <% end %>
+                <% end %>
+              </span>
             </div>
           </div>
         </div>
+          <div class="card-body">
+            <%= image_tag @post.get_post_image(385, 395), class:"card-img-top" %>
+            <!--TODO：simple_formatなので改行は1行のみ反映。safe_joinはハッシュタグのリンクが解除される-->
+            <p class="card-text">
+              <%= simple_format(h(render_with_hashtags(@post.body))) %>
+            </p>
+          </div>
+          <div class="card-footer">
+            <div class="container">
+              <div class="row">
+                <div class="col-3 text-center"><%= image_tag @post.user.get_profile_image(80, 80), class: "img-fluid rounded-circle" %></div>
+                <div class="col-9">
+                  <div class="row">Posted by: <strong><%= link_to "#{@post.user.name}", user_path(@post.user.id), class: "text-reset" %></strong></div>
+                  <div class="row mt-2">For: <strong><%= @post.child.name %></strong></div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div id="favorite_button_<%= @post.id %>" class="col-3 text-center">
+                  <%= render 'public/favorites/favorite', post: @post %>
+                </div>
+                <div id="comment_counter" class="ol-3 text-center"><%= render 'public/post_comments/counter', post: @post %></div>
+                <div class="col-6 text-center"><i class="fa-solid fa-tags"></i><%= @post.genre.name %></div>
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
   </div>
   <div classs="row mt-3">
-    <div id="post_comments" class="col">
+    <div id="post_comments" class="col p-0">
       <%= render 'public/post_comments/show', post: @post %>
     </div>
     <div id="comment-form" class="w-75 ml-auto">

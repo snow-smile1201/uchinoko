@@ -1,8 +1,14 @@
-<% if @activities.present? %>
-  <%= link_to "通知のクリア", destroy_all_inform_activities_path, method: :delete, class:"btn btn-light"%>
-  <% @activities.each do |activity| %>
-    <%= render "#{activity.action_type}", activity: activity %>
-  <% end %>
-<% else %>
-  <p>通知はありません</p>
-<% end %>
+<div class="container m-0">
+  <div class="row">
+    <div class="col-md-6 col-sm-10">
+      <% if @activities.present? %>
+        <%= link_to "通知のクリア", destroy_all_inform_activities_path, method: :delete, class:"btn btn-light m-3"%>
+        <% @activities.each do |activity| %>
+          <%= render "#{activity.action_type}", activity: activity %>
+        <% end %>
+      <% else %>
+        <p>通知はありません</p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,11 @@
-<div class="container px-5 px-sm-0">
-  <div class="row my-4">
-    <h2>投稿編集</h2>
+<div class="container">
+  <div class="row my-3">
+    <div class="col-md-8 mx-auto">
+      <h4>Edit Post</h4>
+    </div>
   </div>
   <div class="row">
-    <div class="col-md-8 mx-auto">
+    <div class="col-md-7 mx-auto">
       <%= render "admin/shared/error_messages", resource: @post %>
       <%= form_with model: @post, url: post_path(@post), method: :patch do |f| %>
         <%= render "form", post: @post, user: @user, f: f %>

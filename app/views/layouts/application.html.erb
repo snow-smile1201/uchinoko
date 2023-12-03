@@ -59,9 +59,11 @@
               <li>
                 <a href="" title="About" class="text-white-50">コンタクト</a>
               </li>
-              <li>
-                <a href="" title="License informations" class="text-white-50">プライバシーポリシー</a>
-              </li>
+              <% if user_signed_in? %>
+                <li>
+                  <%= link_to "退会する", confirm_withdraw_path(current_user), class: "text-white-50" %>
+                </li>
+              <% end %>
             </ul>
           </div>
         </div>
