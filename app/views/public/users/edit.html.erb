@@ -1,6 +1,11 @@
 <div class="container px-sm-0-md-5">
-  <div class="row my-4">
-    <div class="col"><h3>プロフィール編集</h3></div>
+  <div class="row m-2">
+    <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %> mx-auto"><%= message %></div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col"><h4>プロフィール編集</h4></div>
   </div>
   <div class="row px-sm-0-md-5">
     <div class="col-md-8 px-sm-0-md-5">

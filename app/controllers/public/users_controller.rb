@@ -2,6 +2,7 @@ class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_collect_user, only: [:edit]
   before_action :ensure_active_user, only: [:show]
+  before_action :detect_inapporopriate_image, only: [:create, :update]
 
   def index
     #フォロワーの多い順に有効ステータスのユーザー一覧を表示
@@ -81,6 +82,15 @@ class Public::UsersController < ApplicationController
     @user = User.find(params[:id])
     unless @user.is_active == true && (@user.is_banned == false)
       redirect_to user_path(current_user), alert:"お探しのユーザーはすでに退会済みです"
+    end
+  end
+
+  def detect_inapporopriate_image
+    if user_params[:profile_image].present?
+      result = Vision.image_analysis(user_params[:profile_image])
+      unless result
+        redirect_to request.referer, alert: '不適切な画像を含むため投稿できません'
+      end
     end
   end
 end

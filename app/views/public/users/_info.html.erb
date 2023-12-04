@@ -7,8 +7,8 @@
     <div class="col offset-md-1 text-center h5"><i class="fa-regular fa-comment-dots"></i> <%= user.total_comments_count %></div>
   </div>
   <div class="row mt-2">
-    <div class="col offset-1 text-center"><strong class="h5">Follow：<%= link_to user.followings.count, followings_user_path(user) %></strong></div>
-    <div class="col offset-1 text-left"><strong class="h5">Followers：<%= link_to user.followers.count, followers_user_path(user) %></strong></div>
+    <div class="col offset-1 text-center"><strong class="h6">Follow：<%= link_to user.followings.count, followings_user_path(user) %></strong></div>
+    <div class="col offset-1 text-left"><strong class="h6">Followers：<%= link_to user.followers.count, followers_user_path(user) %></strong></div>
   </div>
   <div class="row mt-2">
     <div class="col text-center h5">My Policy</div>

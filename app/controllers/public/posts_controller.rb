@@ -2,10 +2,12 @@ class Public::PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_publish_post, only: [:show]
   before_action :check_child_presence, only: [:new]
+  before_action :detect_inapporopriate_image, only: [:create, :update]
 
   def index
     @user = current_user
     @genres = Genre.all
+    #hashtagは使用頻度が高い順に上位１０件が表示されるようにする。
     @tags = Tag.find(TagRelationship.group(:tag_id).order('count(post_id) desc').limit(10).pluck(:tag_id))
     #公開ステータスが有効、かつユーザーとフォローしているユーザーの投稿を取得
     following_users_ids = current_user.following_users.pluck(:id)
@@ -36,7 +38,6 @@ class Public::PostsController < ApplicationController
   def edit
     @user = current_user
     @post = Post.find(params[:id])
-
   end
 
   def update
@@ -52,7 +53,7 @@ class Public::PostsController < ApplicationController
   def destroy
     post = Post.find(params[:id])
     post.destroy
-    redirect_to posts_path
+    redirect_to posts_path, alert: "投稿を削除しました。"
   end
 
   def hashtag
@@ -86,4 +87,14 @@ private
       redirect_to children_path, notice: "投稿前にこちらからお子さまの情報を登録してください"
     end
   end
+
+  def detect_inapporopriate_image
+    if post_params[:post_image].present?
+      result = Vision.image_analysis(post_params[:post_image])
+      unless result
+        redirect_to request.referer, alert: '不適切な画像を含むため投稿できません'
+      end
+    end
+  end
 end
+

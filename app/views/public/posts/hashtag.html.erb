@@ -1,12 +1,22 @@
-<div class="card-list-container py-5 d-flex">
-  <div class="col-md-10 px-5">
-    <h2>#<%= @tag.hashname %>（<%= @tag.posts.count %>件）の投稿</h2>
-    <div class="row h-100">
-      <% @posts.each do |post|%>
-      <div class="col-sm-12 col-md-6">
-        <%= render partial: 'index', locals:{ post: post } %>
+<div class="container">
+  <div class="row">
+    <div class="col px-5">
+      <h4 class="mt-4">#<%= @tag.hashname %>（<%= @tag.posts.count %>件）の投稿</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card-list-container py-3 d-flex">
+          <div class="col p-0">
+            <div class="row">
+              <% @posts.each do |post|%>
+                <div class="col-sm-12 col-md-6 mb-3">
+                  <%= render partial: 'index', locals:{ post: post } %>
+                </div>
+              <% end %>
+            </div>
+          </div>
       </div>
-      <% end %>
     </div>
   </div>
 </div>

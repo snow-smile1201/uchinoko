@@ -1,6 +1,7 @@
 class Public::ChildrenController < ApplicationController
   before_action :authenticate_user!
-  
+  before_action :detect_inapporopriate_image, only: [:create, :update]
+
   def index
     @child = Child.new
     @children = current_user.children
@@ -33,5 +34,14 @@ class Public::ChildrenController < ApplicationController
    private
   def child_params
     params.require(:child).permit(:name, :birthday, :profile_image, :user_id)
+  end
+
+  def detect_inapporopriate_image
+    if child_params[:profile_image].present?
+      result = Vision.image_analysis(child_params[:profile_image])
+      unless result
+        redirect_to request.referer, alert: '不適切な画像を含むため投稿できません'
+      end
+    end
   end
 end
