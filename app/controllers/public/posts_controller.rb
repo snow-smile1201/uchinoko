@@ -3,6 +3,7 @@ class Public::PostsController < ApplicationController
   before_action :ensure_publish_post, only: [:show]
   before_action :check_child_presence, only: [:new]
   before_action :detect_inapporopriate_image, only: [:create, :update]
+  after_action :sentiment_analysis_message, only: [:create, :update]
 
   def index
     @user = current_user
@@ -23,6 +24,7 @@ class Public::PostsController < ApplicationController
   def create
     @user = current_user
     @post = current_user.posts.new(post_params)
+    @post.score = Language.get_data(post_params[:body])
     if @post.save
       redirect_to post_path(@post), notice: '投稿しました'
     else
@@ -43,8 +45,9 @@ class Public::PostsController < ApplicationController
   def update
     @user = current_user
     @post = Post.find(params[:id])
+    @post.score = Language.get_data(post_params[:body])
     if @post.update(post_params)
-      redirect_to post_path(@post), notice: '投稿を更新しました'
+      redirect_to post_path(@post)
     else
       render :edit
     end
@@ -61,11 +64,15 @@ class Public::PostsController < ApplicationController
     @tag = Tag.find_by(hashname: params[:name])
     @posts = @tag.posts
   end
+  
+  def pick_up
+    @posts = Post.published.positive
+  end
 
 private
 
   def post_params
-    params.require(:post).permit(:title, :body, :child_id, :genre_id, :is_active, :is_banned, :post_image)
+    params.require(:post).permit(:title, :body, :child_id, :genre_id, :is_active, :is_banned, :post_image, :score)
   end
 
   def ensure_publish_post
@@ -95,6 +102,20 @@ private
         redirect_to request.referer, alert: '不適切な画像を含むため投稿できません'
       end
     end
+  end
+
+  def sentiment_analysis_message
+    score = @post.score
+    if score >= 0.8
+      message = "とても明るい内容ですね。たくさんシェアしましょう！"
+    elsif 0 <= score && score < 0.8
+      message = "これからの成長が楽しみですね。"
+    elsif -0.5 <= score && score < 0
+      message = "たまにはリフレッシュの時間も作ってくださいね。"
+    else
+      message = "一人で抱え込みすぎず、誰かに相談してみてくださいね。"
+    end
+    flash[:notice] = message
   end
 end
 

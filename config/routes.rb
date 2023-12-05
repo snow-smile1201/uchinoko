@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       resource :favorites, only: [:create, :destroy]
     end
     get '/post/hashtag/:name' => 'posts#hashtag', as: 'hashtag'
+    get '/post/pick_up' => 'posts#pick_up', as: 'pick_up'
     resources :inform_activities, only: [:index] do
       collection do
         delete :destroy_all

@@ -8,7 +8,7 @@
     <div class="col d-flex justify-content-start">
       <div class="col-3 dropdown">
         <button class="btn btn-block btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <strong>Genre</strong>
+          <strong>#Genre</strong>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
           <ul>
@@ -30,8 +30,13 @@
           </ul>
         </div>
       </div>
+      <div class="col-3 dropdown">
+        <%= link_to pick_up_path, class: "btn btn-sm btn-block btn-light" do %>
+          <strong>#Pick up</strong>
+        <% end %>
+      </div>
       <% unless @user.children.empty? %>
-        <%= link_to new_post_path, class: "offset-3 col-3 btn btn-sm btn-block btn-light" do %>
+        <%= link_to new_post_path, class: "col-3 btn btn-sm btn-block btn-light" do %>
           <i class="fa-solid fa-file-circle-plus"></i>
         <% end %>
       <% end %>

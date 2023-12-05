@@ -4,7 +4,7 @@ class Post < ApplicationRecord
   belongs_to :genre
 
   validates :title, presence: true, length: { maximum: 50 }
-  validates :body, presence: true, length: { maximum: 500 }
+  validates :body, presence: true, length: { maximum: 1000 }
 
   has_one_attached :post_image
   has_many :post_comments, dependent: :destroy
@@ -16,6 +16,7 @@ class Post < ApplicationRecord
   scope :published, -> {where(is_active: true, is_banned: false)}
   scope :unbanned, -> {where(is_banned: false)}
   scope :unpublished, ->  {where(is_active: false, is_banned: true)}
+  scope :positive, -> {where(score: 0.8..)}
   #引数にnを設定し、n日前の投稿数を取得
   scope :created_days_ago, -> (n) { where(created_at: n.days.ago.all_day) }
   #n日間の投稿数を取得、一週間前のデータから配列に格納
