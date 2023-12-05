@@ -7,28 +7,30 @@
   <div class="row">
     <div class="col-md-9 mx-auto p-0">
       <div class="card w-100 mx-auto shadow-lg">
-        <div class="row mt-4">
-          <div class="col-10 mx-auto">
-            <p class="card-title h5">
-              <strong><i class="fa-solid fa-child-reaching"></i>  <%= @post.title %></span></strong>
-            </p>
-            <div class="col text-right mb-2">
-              <span>
-                <%= @post.created_at.strftime('%Y/%m/%d') %>
-                <%if @post.user == current_user %>
-                  <%= link_to edit_post_path(@post) do %>
-                    <i class="fa-regular fa-pen-to-square ml-3"></i>
+        <div class="container">
+          <div class="row mt-4">
+            <div class="col-10 mx-auto">
+              <p class="card-title h5">
+                <strong><i class="fa-solid fa-child-reaching"></i>  <%= @post.title %></span></strong>
+              </p>
+              <div class="col text-right mb-2">
+                <span>
+                  <%= @post.created_at.strftime('%Y/%m/%d') %>
+                  <%if @post.user == current_user %>
+                    <%= link_to edit_post_path(@post) do %>
+                      <i class="fa-regular fa-pen-to-square ml-3"></i>
+                    <% end %>
+                    <%= link_to post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
+                      <i class="fa-regular fa-trash-can text-danger ml-3"></i>
+                    <% end %>
+                    <% if @post.is_active == true %>
+                      <strong class="border rounded p-1 ml-3" style="color: white; background-color: green;">公開中</strong>
+                    <% else %>
+                      <strong class="border rounded p-1 ml-3" style="color: white; background-color: gray;">非公開</strong>
+                    <% end %>
                   <% end %>
-                  <%= link_to post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？" do %>
-                    <i class="fa-regular fa-trash-can text-danger ml-3"></i>
-                  <% end %>
-                  <% if @post.is_active == true %>
-                    <strong class="border rounded p-1 ml-3" style="color: white; background-color: green;">公開中</strong>
-                  <% else %>
-                    <strong class="border rounded p-1 ml-3" style="color: white; background-color: gray;">非公開</strong>
-                  <% end %>
-                <% end %>
-              </span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -61,7 +63,7 @@
     </div>
   </div>
   <div classs="row mt-3">
-    <div id="post_comments" class="col p-0">
+    <div id="post_comments" class="col-10 p-0">
       <%= render 'public/post_comments/show', post: @post %>
     </div>
     <div id="comment-form" class="w-75 ml-auto">

@@ -7,15 +7,16 @@
   <div class="row">
     <div class="col">
       <div class="card-list-container py-3 d-flex">
-          <div class="col p-0">
-            <div class="row">
-              <% @posts.each do |post|%>
-                <div class="col-sm-12 col-md-6 mb-3">
-                  <%= render partial: 'index', locals:{ post: post } %>
-                </div>
-              <% end %>
-            </div>
+        <div class="col p-0">
+          <div class="row">
+            <% @posts.each do |post|%>
+              <div class="col-sm-12 col-md-6 mb-3">
+                <%= render partial: 'index', locals:{ post: post } %>
+              </div>
+            <% end %>
+            <%= paginate @posts %>
           </div>
+        </div>
       </div>
     </div>
   </div>

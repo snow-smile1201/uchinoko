@@ -1,12 +1,23 @@
-<div class="container px-sm-0 px-5" >
-  <div class="row my-4">
-    <h4>ジャンル：<%= Genre.find(@genre_id).name %>の投稿(<%= @posts.count %>件)</h4>
+<div class="container">
+  <div class="row">
+    <div class="col px-5">
+      <h4 class="mt-4">ジャンル：<%= Genre.find(@genre_id).name %>の投稿(<%= @posts.count %>件)</h4>
+    </div>
   </div>
-  <div class="row h-100">
-    <% @posts.each do |post|%>
-      <div class="col-sm-12 col-md-6">
-        <%= render partial: 'public/posts/index', locals:{ post: post } %>
+  <div class="row">
+    <div class="col">
+      <div class="card-list-container py-3 d-flex">
+          <div class="col p-0">
+            <div class="row">
+              <% @posts.each do |post|%>
+                <div class="col-sm-12 col-md-6 mb-3">
+                  <%= render partial: 'public/posts/index', locals:{ post: post } %>
+                </div>
+              <% end %>
+              <%= paginate @posts %>
+            </div>
+          </div>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>

@@ -62,11 +62,11 @@ class Public::PostsController < ApplicationController
   def hashtag
     @user = current_user
     @tag = Tag.find_by(hashname: params[:name])
-    @posts = @tag.posts
+    @posts = @tag.posts.published.order(created_at: :desc).page(params[:page]).per(6)
   end
-  
+  #ピックアップ記事は投稿内容がAI判定でポジティブなものを新しいじゅん順に表示
   def pick_up
-    @posts = Post.published.positive
+    @posts = Post.published.positive.order(created_at: :desc).page(params[:page]).per(6)
   end
 
 private
@@ -94,7 +94,7 @@ private
       redirect_to children_path, notice: "投稿前にこちらからお子さまの情報を登録してください"
     end
   end
-
+#画像がある時のみ処理を実行、結果がfalseならアラートを表示
   def detect_inapporopriate_image
     if post_params[:post_image].present?
       result = Vision.image_analysis(post_params[:post_image])
