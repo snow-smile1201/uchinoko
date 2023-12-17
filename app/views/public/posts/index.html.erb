@@ -13,7 +13,9 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
           <ul>
             <% @genres.each do |genre| %>
-              <li class="dropdown-item"><%= link_to genre.name, genre_search_path(genre_id: genre.id), class:"text-reset" %>(<%= genre.posts.published.count %>)</li>
+              <% unless genre.posts.published.count == 0 %>
+                <li class="dropdown-item"><%= link_to genre.name, genre_search_path(genre_id: genre.id), class:"text-reset" %>(<%= genre.posts.published.count %>)</li>
+              <% end %>
             <% end %>
           </ul>
         </div>
@@ -25,7 +27,9 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
           <ul>
             <% @tags.each do |tag| %>
-              <li class="dropdown-item">#<%= link_to tag.hashname, hashtag_path(tag.hashname), class:"text-reset" %> (<%= tag.posts.published.count %>)</li>
+              <% unless tag.posts.published.count == 0 %>
+                <li class="dropdown-item">#<%= link_to tag.hashname, hashtag_path(tag.hashname), class:"text-reset" %> (<%= tag.posts.published.count %>)</li>
+              <% end %>
             <% end %>
           </ul>
         </div>
