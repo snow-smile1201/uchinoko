@@ -2,8 +2,8 @@
   <% if children.present? %>
     <% children.each do |child| %>
       <div class="row mt-2">
-        <div class="col-4 text-center">
-          <%= image_tag child.get_profile_image(50, 50), class: "my-3 rounded-circle" %>
+        <div class="col-4 p-2 text-center">
+          <%= image_tag child.get_profile_image(50, 50), class: "img-fluid rounded-circle" %>
         </div>
         <div class="col-4">
           <div class="row mt-2">
